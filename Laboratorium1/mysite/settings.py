@@ -20,7 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#!9puxtxnc7-8@=7igupnmz$p81*sen#2ng@j&glcn@awfsof_'
+#klucz ma być prywatny, wiec nie umieszczam go na githubie
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #W Django 3.1 gdy tru i puste subdomeny hosta lokalnego są dozwolone
