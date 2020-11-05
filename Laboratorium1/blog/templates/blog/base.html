@@ -1,0 +1,33 @@
+<!--bazowy html, coś co znajdować się będzie na każdej podstronie-->
+{% load static %}
+<html>
+    <head>
+        <title>Blog Kamili</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Gotu' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        <body>
+            <div class="header">
+                    <a id="name" href="/">Blog Kamili</a>
+                <!--glyphicon glyphicon-plus to klasa boostrapa-->
+                    {% if user.is_authenticated %}
+                <!--by tylko zalogowany admin mogl dodawac posty-->
+                        <a href="{% url 'post_new' %}" class="top-menu">Dodaj wpis</a>
+                    {% endif %}
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <!--block, tu zostanie wtawiony html z innego szablonu-->
+                    {% block content %}
+                    {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </body>
+    </body>
+</html>

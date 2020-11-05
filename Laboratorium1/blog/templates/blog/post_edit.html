@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h2>Nowy post</h2>
+    <!--znacznik formularza HTML-->
+    <!--{% csrf_token %} sprawia, że formularze są bezpieczne-->
+    <form method="POST" class="post-form">{% csrf_token %}
+        <!--wyswietlenie posta-->
+        {{ form.as_p }}
+        <!--przycisk zapisz-->
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

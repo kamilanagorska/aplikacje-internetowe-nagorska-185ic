@@ -1,22 +1,21 @@
-<html>
-    <head>
-        <title>Django Girls blog</title>
-    </head>
-    <body>
-        <div>
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
+{% extends 'blog/base.html' %}
+<!--^ rozszerzenie szablonu base o post_list-->
 
-        <div>
-            <p>published: 14.06.2014, 12:14</p>
-            <h2><a href="">My first post</a></h2>
-            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <!--opublikowano: data publikacji-->
+            <div class="date">
+                opublikowano: {{ post.published_date }}
+            </div>
+            <!--tytul posta, jednocześnie link do posta-->
+            <!--post_detail oznacza że django bedzie oczekiwal url w blog/urls.py o
+            nazwie name=post_detail pk=post.pk primary key, django tworzy klucz (liczba rosnąca o jeden przy
+            każdym rosnącym rekordzie i doda go pod nazwą pk dla kazdego posta-->
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <!--zawartosc posta,|linebreaksbr przepuszcza wpisy przez filtr, który zamienia 
+            znaczniki nowej linii na akapity.-->
+            <p>{{ post.text|linebreaksbr }}</p>
         </div>
-
-        <div>
-            <p>published: 14.06.2014, 12:14</p>
-            <h2><a href="">My second post</a></h2>
-            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut f.</p>
-        </div>
-    </body>
-</html>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,50 @@
+body {
+    font-family: 'Gotu';
+}
+.header {
+    background-color: #e6b3cc;
+    overflow: hidden;
+}
+#name {
+    font-size: 50px;
+    font-weight: bolder;
+    font-family: 'Allura';
+}
+.header a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 15px;
+}
+.header a:hover {
+    color: #f9ecf2;
+}
+.content {
+    margin-left: 40px;
+}
+.date {
+    color: #d279a6;
+    margin-top: 30px;
+}
+.save {
+    float: right;
+}
+.post {
+    margin-bottom: 50px;
+}
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+h1, h2, h3, h4 {
+    color: #993366;
+    font-weight: bolder;
+}
+.post h2 a, .post h1 a:visited {
+    color:  #993366;
+    text-decoration: none;
+}
+.edit {
+    float:right;
+}
