@@ -12,11 +12,11 @@
     <body>
         <body>
             <div class="header">
-                    <a id="name" href="/">Blog Kamili</a>
+                    <a id="name" class="font2" href="/">Blog Kamili</a>
                 <!--glyphicon glyphicon-plus to klasa boostrapa-->
                     {% if user.is_authenticated %}
                 <!--by tylko zalogowany admin mogl dodawac posty-->
-                        <a href="{% url 'post_new' %}" class="top-menu">Dodaj wpis</a>
+                        <a class="font1" href="{% url 'post_new' %}" class="top-menu">Dodaj wpis</a>
                     {% endif %}
             </div>
             <div class="content">

@@ -4,7 +4,7 @@
     <div class="post">
         <!--wyświetlanie daty opublikowania jeśli istnieje-->
         {% if post.published_date %}
-            <div class="date">
+            <div class="date font1">
                 {{ post.published_date }}
             </div>
         {% endif %}
@@ -12,7 +12,7 @@
         {% if user.is_authenticated %}
             <a class="edit btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
         {% endif %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.text|linebreaksbr }}</p>
+        <h1 class="font2">{{ post.title }}</h1>
+        <p class="font1">{{ post.text|linebreaksbr }}</p>
     </div>
 {% endblock %}

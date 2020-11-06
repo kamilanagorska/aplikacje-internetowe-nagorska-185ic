@@ -5,17 +5,17 @@
     {% for post in posts %}
         <div class="post">
             <!--opublikowano: data publikacji-->
-            <div class="date">
+            <div class="date font1">
                 opublikowano: {{ post.published_date }}
             </div>
             <!--tytul posta, jednocześnie link do posta-->
             <!--post_detail oznacza że django bedzie oczekiwal url w blog/urls.py o
             nazwie name=post_detail pk=post.pk primary key, django tworzy klucz (liczba rosnąca o jeden przy
             każdym rosnącym rekordzie i doda go pod nazwą pk dla kazdego posta-->
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <h1><a class="font2" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <!--zawartosc posta,|linebreaksbr przepuszcza wpisy przez filtr, który zamienia 
             znaczniki nowej linii na akapity.-->
-            <p>{{ post.text|linebreaksbr }}</p>
+            <p class="font1">{{ post.text|linebreaksbr }}</p>
         </div>
     {% endfor %}
 {% endblock %}
