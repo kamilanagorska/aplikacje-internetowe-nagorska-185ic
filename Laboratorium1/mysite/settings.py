@@ -21,14 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #klucz ma być prywatny, wiec nie umieszczam go na githubie
-
+SECRET_KEY = '#!9puxtxnc7-8@=7igupnmz$p81*sen#2ng@j&glcn@awfsof_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #W Django 3.1 gdy tru i puste subdomeny hosta lokalnego są dozwolone
 DEBUG = True
 #Lista ciągów znaków reprezentujących nazwy hostów/domek, które może obsługiwać witryna Django. 
 #Środek bezpieczeństwa zapobiegający atakom HTTP Host header
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blog-kamila-nagorska.herokuapp.com']
 
 
 # Application definition
