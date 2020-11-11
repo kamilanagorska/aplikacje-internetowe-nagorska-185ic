@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 #Lista ciągów znaków reprezentujących nazwy hostów/domek, które może obsługiwać witryna Django. 
 #Środek bezpieczeństwa zapobiegający atakom HTTP Host header
-ALLOWED_HOSTS = ['blog-kamila-nagorska.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -124,4 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
+django_heroku.settings(locals())

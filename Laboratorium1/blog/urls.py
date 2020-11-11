@@ -1,7 +1,5 @@
 from django.urls import path
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
 #import funkcji path django i wszystkie widoki z aplikacji blog
 #wzorzec adresu url, przyporządkujemy widok (view) o nazwie post)list do strony glownej
 urlpatterns = [
@@ -12,5 +10,4 @@ urlpatterns = [
     path('post/new', views.post_new, name='post_new'),
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
     path('post/<pk>/remove/', views.post_remove, name='post_remove'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-#^ CSSy nie działały więc znalazłam to w dokumentacji i działa
+] 
