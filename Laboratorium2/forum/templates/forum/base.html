@@ -11,30 +11,33 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e2d1f0;">
-        <a class="navbar-brand" href="{% url 'base' %}">My Forum</a>
+        <a class="navbar-brand" href="{% url 'home' %}">My Forum</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log Out<span class="sr-only"></span></a>
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out<span class="sr-only"></span></a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log In</a>
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-secondary btn-sm" href="#">Sign Up</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'signup' %}">Sign Up</a>
                 </li>
             {% endif %}
           </ul>
         </div>
       </nav>
   </header>
-  <div class="container">
-    {% block content %}
-    {% endblock content %}
+  <div class="container" style="text-align: center;">
+    <br>
+    <div class="card">
+      {% block content %}
+      {% endblock content %}
+    </div>
   </div>
    <!-- jQuery, Popper.js, and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
