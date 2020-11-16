@@ -127,3 +127,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 LOGIN_REDIRECT_URL='home'
 #tu po wylogowaniu
 LOGOUT_REDIRECT_URL='home'
+#zamiast wysłania e-maile, zaplecze konsoli zapisuje tylko te e-maile, które
+#zostałyby wysłane
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

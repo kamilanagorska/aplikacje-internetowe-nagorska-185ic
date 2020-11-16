@@ -9,7 +9,7 @@
     {% if user.is_authenticated %}
       <p>Welcome back, {{ user.username }}!!!</p>
       <a href="{% url 'logout' %}" class="btn-outline-secondary btn-sm">Log Out</a>
-      <a href="{% url 'change_password' %}" class="btn-outline-secondary btn-sm">Change password</a>
+      <a href="{% url 'password_change' %}" class="btn-outline-secondary btn-sm">Change password</a>
     {% else %}
       <p>You are not logged in</p>
       <a href="{% url 'login' %}" class="btn-outline-secondary btn-sm">Log In</a>
