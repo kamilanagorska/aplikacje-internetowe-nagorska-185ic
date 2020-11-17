@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'forum',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +55,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        #templates na poziomie projektu
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -67,7 +68,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Warsaw'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -120,13 +120,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 #tu zostaniemy przekierowani po zalogowaniu
 LOGIN_REDIRECT_URL='home'
 #tu po wylogowaniu
 LOGOUT_REDIRECT_URL='home'
+
 #zamiast wysłania e-maile, zaplecze konsoli zapisuje tylko te e-maile, które
 #zostałyby wysłane
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

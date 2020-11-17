@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
+
 #Django udostępnia kilka widoków, których można użyć do obsługi logowania, wylogowania i zarządzania hasłami. 
 #Wykorzystują one standardowe formularze autoryzacji, ale można też przekazywać własne formularze
 #Wpisanie drugiej linijki w urlpatterns zawiera w sobie poniższe wzorce adresów URL:
@@ -26,8 +28,12 @@ from django.urls import path, include
 # accounts/password_reset/done/ [name='password_reset_done']
 # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
 # accounts/reset/done/ [name='password_reset_complete']
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),    
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('forum.urls')),
+    # wyświetlanie strony głównej
+    #TemplateView klasa Django służy do wyświetlania statycznych widoków html
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
 ]
