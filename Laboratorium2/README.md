@@ -16,7 +16,7 @@ Istniejący już użytkownicy mają możliwość zalogowania się wchodząć w p
 ![9](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2/screenshots/9.png?raw=true)
 
 #### Log out
-Zalogowany użytkownik ma oczywiście możliwość wylogowania się ze strony wciskając opcję "Log out. Po wylogowaniu wyświetla nam się strona główna.
+Zalogowany użytkownik ma oczywiście możliwość wylogowania się ze strony wciskając opcję "Log out". Po wylogowaniu wyświetla nam się strona główna.
 
 ![10](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2/screenshots/10.png?raw=true)
 
