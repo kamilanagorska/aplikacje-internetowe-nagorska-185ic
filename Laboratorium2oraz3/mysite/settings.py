@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = 'a+8qc^_5e^6dby$a+b%p$yf(38djcb)q4&lcqkv$5&q*hm!=ni'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -147,10 +147,10 @@ AUTHENTICATION_BACKENDS = [
 #ID mojej apki
 SOCIAL_AUTH_FACEBOOK_KEY = '165501115300137'
 #Secret key, ktorego nie udostepnie na githubie, z powodow bezpieczenstwa
-SOCIAL_AUTH_FACEBOOK_SECRET = 
+SOCIAL_AUTH_FACEBOOK_SECRET = '4260e5b30f54a67eed283f210bc44ab3'
 
 #to samo dla Githuba
 SOCIAL_AUTH_GITHUB_KEY = '7cce7f1951bce5e53286'
-SOCIAL_AUTH_GITHUB_SECRET = 
+SOCIAL_AUTH_GITHUB_SECRET = '1793a895e7ed7e8a68eb10bb852b0b3544569f83'
 
 django_heroku.settings(locals())
