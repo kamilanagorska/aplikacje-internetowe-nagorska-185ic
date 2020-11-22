@@ -96,54 +96,54 @@ Uwierzytelnianie przez social media (Facebook i GitHub) i za pomocą wbudowanych
 [Link]()
 
 #### Log In
-[!20](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/20.png?raw=true)
+![20](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/20.png?raw=true)
 
 Po wejściu na podstronę z logowaniem pojawiają nam się dwie dodatkowe opcje, których wcześniej nie było. Mamy możliwość zalogowanie się za pomocą Facebooka lub GitHuba.
 
 #### Login with Facebook
 Wciskając opcję "Login with Facebook" przekierowani zostajemy do strony Facebooka, gdzie jesteśmy zapytani, czy chcemy połączyć nasze konto z tą aplikacją. (Jeśli nie jesteśmy zalogowani na Facebooku w danej przeglądarce, najpierw zostaniemy przekierowani do tradycyjnego okna Facebooka z logowaniem.)
 
-[!21](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/21.png?raw=true)
+![21](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/21.png?raw=true)
 
 Po potwierdzeniu, wracamy na MyForum i widzimi, że zalogowanie powiodło się.
 
-[!22](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/22.png?raw=true)
+![22](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/22.png?raw=true)
 
 Użytkownika zalogowanego przez Facebooka można teraz zobaczyć na liście użytkowników widocznej dla administratora.
 
-[!23](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/23.png?raw=true)
+![23](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/23.png?raw=true)
 
 #### Login with Github
 Wybierając opcję "Login with Github" pojawia nam się takie okno:
 
-[!24](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/24.png?raw=true)
+![24](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/24.png?raw=true)
 
 Po zatwierdzeniu zostajemy przekierowani na stronę główną MyForum i jesteśmy zalogowani kontem GitHub. 
 
-[!25](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/25.png?raw=true)
+![25](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/25.png?raw=true)
 
 Konto to, tak samo jak konto z Facebooka, jest teraz widoczne na liście użytkowników:
 
-[!26](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/26.png?raw=true)
+![26](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/26.png?raw=true)
 
 #### Sign Up with E-mail Adress
 Gdy wejdziemy w Sign Up, na dole dodana została opcja "Sing Up with E-mail Adress", gdy ją wciśniemy pojawia nam się formularz, który umożliwia nam utworzenie konta z użyciem adresu e-mail.
 
-[!27](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/27.png?raw=true)
+![27](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/27.png?raw=true)
 
 Wpisujemy tu swoje dane i hasło.
 
-[!28](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/28.png?raw=true)
+![28](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/28.png?raw=true)
 
 Po wciśnięciu "Sign Up" wyświetla nam się komunikat, że nasze konto zostało utworzone. Teraz można przejść do podstrony "Log In", by się zalogować. 
 
-[!29](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/29.png?raw=true)
+![29](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/29.png?raw=true)
 
 Logowanie teraz może odbyć się za pomocą wpisania adresu e-mail lub nazwy użytkownika.
 
 Logowanie wpisując e-mail:
-[!30](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/30.png?raw=true)
-[!31](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/31.png?raw=true)
+![30](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/30.png?raw=true)
+![31](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/31.png?raw=true)
 
 Logowanie wpisując nazwę użytkownika:
 [!32](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/32.png?raw=true)
