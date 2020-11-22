@@ -8,7 +8,7 @@ Aplikacja Django - blog [Laboratorium1](https://github.com/kamilanagorska/aplika
 ### Laboratorium 2 i 3 połączone w jeden projekt
 Rejestracja użytkowników z wykorzystaniem wbudowanych widoków uwierzytelniających Django [Laboratorium2](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium2oraz3#laboratorium-2)
 
-Uwierzytelnianie użytkowników za pomocą social media i e-maila [Laboratorium](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium2oraz3#laboratorium-3)
+Uwierzytelnianie użytkowników za pomocą social media i e-maila [Laboratorium3](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium2oraz3#laboratorium-3)
 
 ### Laboratorium 4
 ### Laboratorium 5
