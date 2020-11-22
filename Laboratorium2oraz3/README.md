@@ -1,6 +1,7 @@
 ### Laboratorium 2 i Laboratorium 3 w jednym projekcie
 
 [Opis laboratorium 2](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium2oraz3#laboratorium-2)
+
 [Opis Laboratorium 3](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium2oraz3#laboratorium-3)
 
 ### Laboratorium 2
