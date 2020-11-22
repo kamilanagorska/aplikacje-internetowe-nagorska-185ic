@@ -91,9 +91,9 @@ Po wpisaniu nowego hasła dwa razy (oczywiście tak samo jak w przypadku zmiany 
 
 
 ### Laboratorium 3
-Uwierzytelnianie przez social media (Facebook i GitHub) i za pomocą wbudowanych backendów (username lub email). Dodatkowo dodałam stronę na heroku.
+Uwierzytelnianie przez social media (Facebook i GitHub) i za pomocą wbudowanych backendów (username lub email). Dodatkowo dodałam stronę na heroku, a dokładniej zaktualizowałam istniejącą już stronę z Laboratorium 2.
 
-[Link]()
+[Link](https://myforum-nagorska.herokuapp.com/)
 
 #### Log In
 ![20](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/20.png?raw=true)
