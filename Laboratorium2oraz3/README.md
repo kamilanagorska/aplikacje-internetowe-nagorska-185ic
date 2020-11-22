@@ -142,15 +142,18 @@ Po wciśnięciu "Sign Up" wyświetla nam się komunikat, że nasze konto został
 Logowanie teraz może odbyć się za pomocą wpisania adresu e-mail lub nazwy użytkownika.
 
 Logowanie wpisując e-mail:
+
 ![30](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/30.png?raw=true)
 ![31](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/31.png?raw=true)
 
 Logowanie wpisując nazwę użytkownika:
-[!32](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/32.png?raw=true)
-[!33](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/33.png?raw=true)
+
+![32](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/32.png?raw=true)
+![33](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/33.png?raw=true)
 
 Nowo utworzony użytkownik znajduje się na liście użytkowników:
-[!34](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/34.png?raw=true)
+
+![34](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium2oraz3/screenshots/34.png?raw=true)
 
 
 
