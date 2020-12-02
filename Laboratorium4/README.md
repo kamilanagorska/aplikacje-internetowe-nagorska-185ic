@@ -1,5 +1,5 @@
 ### Laboratorium 4
-Wykorzystanie Django Rest Framework w tym Swaggera.
+Wykorzystanie Django Rest Framework i Swaggera.
 
 #### DRF
 Stworzyłam projekt blog_project a w nim dwie aplikacje:
