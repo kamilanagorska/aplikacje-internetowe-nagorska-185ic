@@ -10,5 +10,5 @@ urlpatterns = [
 #obsługa automatycznego trasowania adresów URL do Django
 #prosty, szybki i spójny sposób łączenia logiki widoku z zestawem adresów URL
 router = SimpleRouter()
-router.register('', AlbumViewSet, basename='posts')
+router.register('', AlbumViewSet, basename='cds')
 urlpatterns = router.urls
