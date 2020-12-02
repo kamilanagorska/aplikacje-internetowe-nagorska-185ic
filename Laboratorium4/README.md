@@ -75,7 +75,7 @@ Po zalogowaniu widzę informację dotyczące posta. Mogę też np. pobrać dane 
 
 ![16](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4/screenshots/16.png?raw=true)
 
-Jest to spowodowane tym, że stworzyłam swoje własne zezwolenie (permission), które pozwala na odczyt informacji o konretnym poście tylko zalogowanym użytkownikom. Edycja wpisu i jego usuwanie jest tylko możliwe dla autora wpisu. Użytkownik testuser nie jest autorem wpisu o ID 1. Autorem tego wpisu jest admin, czyli tylko on jest w stanie edytować ten post. Testuser jest natomiast autorem wpisu o ID, więc jeśli wejdziemy w /api/v1/2/ to pojawią nam się opcję edycji i usuwania.
+Jest to spowodowane tym, że stworzyłam swoje własne zezwolenie (permission), które pozwala na odczyt informacji o konretnym poście tylko zalogowanym użytkownikom. Edycja wpisu i jego usuwanie jest tylko możliwe dla autora wpisu. Użytkownik testuser nie jest autorem wpisu o ID 1. Autorem tego wpisu jest admin, czyli tylko on jest w stanie edytować ten post. Testuser jest natomiast autorem wpisu o ID = 2, więc jeśli wejdziemy w /api/v1/2/ to pojawią nam się opcję edycji i usuwania.
 
 ![17](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4/screenshots/17.png?raw=true)
 
@@ -84,7 +84,7 @@ Do zdefiniowania adresów URL użyłam obsługi automatycznego trasowania adres�
 
 
 #### Aplikacja cds
-Jest to aplikacja, która posiada muzyków i albumy. Muzyk ma swoją nazwę, a album składa się z id (dodanego automatycznie), artysty (ID artysty, artystą jest któryś z muzyków), tytułu, gatunku muzycznego, daty wydania i ilości piosenek na płycie. Muzycy jak i Albumy są wyświetlani w panelu administratora.
+Jest to aplikacja, która posiada muzyków i albumy. Muzyk ma swoją nazwę, a album składa się z ID (dodanego automatycznie), artysty (ID artysty, artystą jest któryś z muzyków), tytułu, gatunku muzycznego, daty wydania i ilości piosenek na płycie. Muzycy jak i Albumy są wyświetlani w panelu administratora.
 
 ![18](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4/screenshots/18.png?raw=true)
 
@@ -158,7 +158,7 @@ Możemy np. przetestować żądanie GET. Musimy podać ID Albumu, który chcemy 
 
 ![35](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4/screenshots/35.png?raw=true)
 
-Wyświetlają nam się odpowiedz z API, informacje o Albumie o danym ID:
+Wyświetla nam się odpowiedż z API, informacje o Albumie o danym ID:
 
 ![36](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4/screenshots/36.png?raw=true)
 
