@@ -1,0 +1,25 @@
+{% extends 'webscraping\base.html' %}
+
+{% block title %}Search by Class name{% endblock title %}
+
+{% block content %}
+<h5 class="card-header text-center">Class Search</h5>
+<div class="card-body text-center">
+<form action="{% url 'search_results_class' %}" method="POST" style="width: 40%; margin: auto;">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="url">URL of website to scrape:</label>
+      <input type="text" class="form-control" name="web_link" aria-describedby="url" required>
+    </div>
+    <div class="form-group">
+      <label for="clas">Class name of element:</label>
+      <input type="text" class="form-control" name="clas" required>
+    </div>
+    <div class="form-group">
+        <label for="element">HTML element:</label>
+        <input type="text" class="form-control" name="element" required>
+      </div>
+    <button type="submit"class="btn btn-secondary">Search</button>
+  </form>
+  </div>
+   {% endblock content %}

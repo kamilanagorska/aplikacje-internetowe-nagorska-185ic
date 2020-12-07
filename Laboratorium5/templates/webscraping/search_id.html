@@ -1,0 +1,21 @@
+{% extends 'webscraping\base.html' %}
+
+{% block title %}Search by ID{% endblock title %}
+
+{% block content %}
+<h5 class="card-header text-center">ID Search</h5>
+<div class="card-body text-center">
+<form action="{% url 'search_results_id' %}" method="POST" style="width: 40%; margin: auto;">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="url">URL of website to scrape:</label>
+      <input type="text" class="form-control" name="web_link" aria-describedby="url" required>
+    </div>
+    <div class="form-group">
+      <label for="idd">ID of element:</label>
+      <input type="text" class="form-control" name="idd" required>
+    </div>
+    <button type="submit"class="btn btn-secondary">Search</button>
+  </form>
+  </div>
+   {% endblock content %}

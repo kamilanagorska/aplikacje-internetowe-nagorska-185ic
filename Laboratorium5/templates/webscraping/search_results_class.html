@@ -1,0 +1,37 @@
+{% extends 'webscraping\base.html' %}
+
+{% block title %}Class Search Results{% endblock title %}
+
+{% block content %}
+<h5 class="card-header text-center">Class Search results</h5>
+<div class="card-body">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-secondary">
+            Found {{amount}} result/s
+        </li>
+        {% for link in all_links %}
+        <li class="list-group-item">
+            Element: {{link.el}}
+            <br>
+            Id: {{link.idd}}
+            <br>
+            Class(es): {{link.classs}}
+            <br>
+            Text: {{link.text}}
+            <br> 
+            Href: {{link.href}}
+            <br>
+            Src: {{link.src}}
+            <br>
+            Alt: {{link.alt}}
+            <br>
+            Content: {{link.content}}
+            <br>
+            Name: {{link.name}}
+        </li>
+        {% endfor %}
+      </ul>
+
+
+</div>
+   {% endblock content %}

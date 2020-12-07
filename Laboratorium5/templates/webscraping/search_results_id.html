@@ -1,0 +1,21 @@
+{% extends 'webscraping\base.html' %}
+
+{% block title %}ID Search Results{% endblock title %}
+
+{% block content %}
+<h5 class="card-header text-center">ID Search results</h5>
+<div class="card-body">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-secondary">
+               {% if amount == 0 %}
+               No result found
+               {% else %}
+               Searching completed successfully
+               {% endif %}
+        </li>
+        <li class="list-group-item">
+            {{item}}
+        </li>
+    </ul>
+</div>
+   {% endblock content %}
