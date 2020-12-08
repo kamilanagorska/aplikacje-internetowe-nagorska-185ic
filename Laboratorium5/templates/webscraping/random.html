@@ -19,6 +19,66 @@
         <li class="list-group-item">
             {{ex2}}
         </li>
+        <li class="list-group-item list-group-item-secondary">
+            Example 3.:
+        </li>
+        <li class="list-group-item">
+                Found {{amount}} product/s
+        </li>
+        {% for item in items %}
+        <li class="list-group-item">
+            Name: {{item.name}}<br>
+            Price: {{item.price}}<br>
+        </li>
+        {% endfor %}
+        <li class="list-group-item list-group-item-secondary">
+            Example 4.:
+        </li>
+        <li class="list-group-item">
+            Head of page:
+        </li>
+        <li class="list-group-item">
+            {{page_head}}
+        </li>
+        <li class="list-group-item">
+            First p element:
+        </li>
+        <li class="list-group-item">
+            {{fp}}
+        </li>
+        <li class="list-group-item">
+            Another p element:
+        </li>
+        <li class="list-group-item">
+            {{ap}}
+        </li>
+        <li class="list-group-item">
+            Title:
+        </li>
+        <li class="list-group-item">
+            {{t}}
+        </li>
+        <li class="list-group-item list-group-item-secondary">
+            Example 5.:
+        </li>
+        <li class="list-group-item">
+            Next element after h2 tag:
+        </li>
+        <li class="list-group-item">
+            {{ne}}
+        </li>
+        <li class="list-group-item">
+            Next sibling for first p tag:
+        </li>
+        <li class="list-group-item">
+            {{ns}}
+        </li>
+        <li class="list-group-item">
+            Next sibling of next sibling of first p tag:
+        </li>
+        <li class="list-group-item">
+            {{nss}}
+        </li>
       </ul>
 
 
