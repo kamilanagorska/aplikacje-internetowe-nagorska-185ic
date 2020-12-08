@@ -14,6 +14,7 @@ Uwierzytelnianie użytkowników za pomocą social media i e-maila [Laboratorium3
 Wykorzystanie Django REST Framework w tym Swaggera [Laboratorium4](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium4)
 
 ### Laboratorium 5
+Web Scraping z wykorzystaniem Beautiful Soup, XPath i lxml [Laboratorium5](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium5)
 ### Laboratorium 6
 ### Laboratorium 7
 ### Laboratorium 8
