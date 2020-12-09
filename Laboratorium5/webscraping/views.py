@@ -163,7 +163,11 @@ def search_class(request):
             idd = i.get('id')
             idd = idd.strip() if idd is not None else ""
 
-            classs = clas
+            classs = i.get('class')
+            #jeśli element nie ma przypisanej zadnej klasy
+            #to zastepuje to ""
+            if classs is None:
+                classs = ""
 
             text = i.text
             text = text.strip() if text is not None else ""
