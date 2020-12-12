@@ -1,6 +1,13 @@
 ### Laboratorium 4 oraz Laboratorium 6
 Wykorzystanie Django Rest Framework i Swaggera. Licznik wejść z wykorzystaniem Cookies.
 
+Spis treści:
+- Laboratorium 4 [tutaj]()
+- Laboratorium 6 [tutaj]()
+
+
+### Laboratorium 4
+
 #### DRF
 Stworzyłam projekt blog_project a w nim dwie aplikacje:
 - posts
@@ -184,3 +191,6 @@ Po prawej znajdują się "samples" generowane na podstawie schematu JSON. Można
 
 ![41](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/41.png?raw=true)
 
+
+
+### Laboratorium 6
