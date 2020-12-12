@@ -2,8 +2,10 @@
 Wykorzystanie Django Rest Framework i Swaggera. Licznik wejść z wykorzystaniem Cookies.
 
 Spis treści:
-- Laboratorium 4 [tutaj]()
-- Laboratorium 6 [tutaj]()
+- Laboratorium 4 [tutaj](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium4oraz6#laboratorium-4)
+- Laboratorium 6 [tutaj](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium4oraz6#laboratorium-6)
+
+
 
 
 ### Laboratorium 4
@@ -190,6 +192,7 @@ Pod tym znajduje się odpowiedź metody, która jest kolorowana zgodnie z kodem 
 Po prawej znajdują się "samples" generowane na podstawie schematu JSON. Można je kopiować za pomocą przycisku "Copy".
 
 ![41](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/41.png?raw=true)
+
 
 
 
