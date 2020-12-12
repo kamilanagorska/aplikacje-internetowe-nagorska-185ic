@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import PostViewSet
+from .views import PostViewSet, UserViewSet
 from rest_framework.routers import SimpleRouter
+from . import views
 
 urlpatterns = [
     #Wszystkie routes będą znajdować się w api/v1/, więc nasz widok PostList ma pusty ciąg „” 
@@ -15,5 +16,6 @@ urlpatterns = [
 #obsługa automatycznego trasowania adresów URL do Django
 #prosty, szybki i spójny sposób łączenia logiki widoku z zestawem adresów URL
 router = SimpleRouter()
+router.register('users', UserViewSet, basename='users')
 router.register('', PostViewSet, basename='posts')
 urlpatterns = router.urls

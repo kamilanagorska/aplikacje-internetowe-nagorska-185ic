@@ -19,6 +19,7 @@ from django.urls import path, include, re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from posts.views import counter
 
 #Ze Swaggera
 #Schemat API pozwala na szereg przypadków użycia, w tym generowanie dokumentacji referencyjnej 
@@ -41,6 +42,9 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    #licznik wejsc
+    path('', counter, name='counter'),
+    #admin
     path('admin/', admin.site.urls),
     #URL "trasa" do naszej aplikacji z postami
     #Dobrą praktyką jest zawsze wersjonowanie interfejsów API - v1 /, v2 / itd ponieważ
@@ -60,6 +64,19 @@ urlpatterns = [
     #jest to można powiedzieć wikoki login i logout
     #'api-auth/ może być dowolnym adresem URL
     path('api-auth/', include('rest_framework.urls')),
+    #należy dodać po zainstalowaniu rest_auth
+    path('api/v1/rest-auth/', include('rest_auth.urls')),
+    #dodanie powyższego url powoduje dodanie do naszego API:
+    #rest-auth/login/
+    #rest-auth/logout/
+    #rest-auth/password/reset
+    #rest-auth/password/reset/confirm
+    #-----------------------------------------------
+    #"trasa" adresu URL do rejestracji
+    #mamy teraz miejsce, gdzie mozemy zalozyc konto!
+    #po utworzeniu konta pojawia nam się odpowiedz HTTP "HTTP 201 Created", zwraca
+    #token autoryzacji dla tego uzytkownika
+    path('api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
 
     #SWAGGER
     #w dokumentacji online jast url() zamiast re_path(), ale od Django 3.1 url() jest wycofane
