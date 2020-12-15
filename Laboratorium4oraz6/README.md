@@ -197,3 +197,160 @@ Po prawej znajdują się "samples" generowane na podstawie schematu JSON. Można
 
 
 ### Laboratorium 6
+W Laboratorium 4 utworzyłam dwa API (v1,v2), a dodatkowo opcję wyszukiwania i sortowania. Laboratorium 6 jest kontynuacją Laboratorium 4.
+
+#### Viewsets
+W ramach Laboratorium 4 użyłam już viewsets do wyświetlania postów i albumów. 
+
+![42](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/42.png?raw=true)
+
+![43](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/43.png?raw=true)
+
+(Czasem Visual Studio Code mi się psuje i podreśla coś, co nie jest błędem na czerwono)
+
+Dodałam w ramach API v1 wyświetlanie listy użytkowników, więc stworzyłam dla nich viewset.
+
+![44](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/44.png?raw=true)
+
+We wszystkich przypadkach używam ModelViewSet, który zapewnia nam widok listy jak i widok szczegółowy wybranego elementu.
+
+
+#### Routers
+Routers również użyłam już poprzednio. Musiałam dodać ścieżkę dla utworzonej listy użytkowników.
+
+![45](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/45.png?raw=true)
+
+
+![46](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/46.png?raw=true)
+
+
+#### Serializer
+Dodatkowo by utworzyć listę użytkowników musiałam stworzyć dla nich serializer: 
+
+![47](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/47.png?raw=true)
+
+I tak dzięki temu powstała lista użytkowników:
+
+![48](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/48.png?raw=true)
+
+Szczegółowy widok użytkownika:
+
+![49](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/49.png?raw=true)
+
+
+#### Uwierzytelnianie
+Domyślnym ustawieniem w Django REST Framework jest połączenie Basic i Session Authentication. Dlatego najpierw zdefiniowałam te dwa sposoby uwierzytelniania i nic się nie zmieniło. Definiowane są one na raz ponieważ służą one różnym celom. Session służy do zasilania interfejsu API Browsable oraz możliwości logowania się i wylogowywania z niego, a Basic służy do przekazywania ID sesji w nagłówkach HTTP dla samego interfejsu API.
+
+Trzecim sposobem uwierzytelniania jest Token Authentication. Jest to najpopularniejsze podejście w ostatnich latach ze względu na wzrost liczby aplikacji jednostronnicowych. Jest ono bezstanowe, po wysłaniu przez klienta początkowych danych użytkownika do serwera generowany jest unikalny token, który jest następnie przechowywany przez klienta jako plik cookie lub w pamięci lokalnej. Ten token jest następnie przekazywany w nagłówku każdego przychodzącego żądania HTTP, a serwer używa go do weryfikacji uwierzytelnienia użytkownika, sam serwer nie prowadzi rejestru użytkownika, tylko tego, czy token jest ważny, czy nie. 
+
+By zdefiniować ten posób uwierzytelniania nadal trzeba umieścić w ustawieniach Session Authentication ponieważ potrzebujemy go dla naszego interfejsu API z możliwością przeglądania, ale teraz użyjemy tokenów do przekazywania poświadczeń uwierzytelniania tam i z powrótem w naszych nagłówkach HTTP. 
+
+![50](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/50.png?raw=true)
+
+By zaimplementować Token Authentication należy dodać w ustawieniach aplikację authtoken. Po dodaniu jej w panelu administratora wyświetla nam się pole Tokens. 
+
+![51](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/51.png?raw=true)
+
+![52](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/52.png?raw=true)
+
+Odrazu po pojawieniu się pola Tokens, nie było tam żadnych Tokenów, tworzą się one dopiero po wywołaniu interfejsu API dla użytkownika w celu zalogowania się. Dlatego musiałam utworzyć "endpoints'y", by użytkownicy mogli się logować i wylogowywać. By to zrobić musiałam zainstalować django-rest-auth i dodać tą aplikację do ustawień. 
+
+![53](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/53.png?raw=true)
+
+Musiałam też w urls dla całego projektu dodać jedną "ścieżkę":
+
+![54](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/54.png?raw=true)
+
+Dodanie tego url powoduje, że mamy teraz dostęp do 4 adresów url:
+- rest-auth/login/
+- rest-auth/logout/
+- rest-auth/password/reset
+- rest-auth/password/reset/confirm.
+
+![55](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/55.png?raw=true)
+
+![56](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/56.png?raw=true)
+
+![57](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/57.png?raw=true)
+
+![58](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/58.png?raw=true)
+
+Następnie utworzyłam opcję rejestracji. Wykorzystałam do tego django-allauth. Po zainstalowaniu dodałam ją, django.contrib.sites i rest_auth.registration do aplikacji w ustawieniach.
+
+![60](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/60.png?raw=true)
+
+![59](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/59.png?raw=true)
+
+Do ustawień musiałam dodać również poniższe dwie linijki kodu:
+
+![61](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/61.png?raw=true)
+
+W adresach url całego projektu zdefiniowałam ścieżkę dla rejestracji:
+
+![62](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/62.png?raw=true)
+
+Teraz gdy wejdziemy w ten adres wyświetla nam się to:
+
+![63](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/63.png?raw=true)
+
+By mieć pewność, że wszystko działa, utworzę testowego użytkownika:
+
+![64](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/64.png?raw=true)
+
+Po wciśnięciu POST wyświetla się status HTTP 201 Created, czyli konto zostało utworzone. Widać też "key". Jest to token wygenerowany dla nowego użytkownika.
+
+![65](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/65.png?raw=true)
+
+W konsoli ukazał się mail:
+
+![66](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/66.png?raw=true)
+
+Gdy wejdziemy teraz w panel administracyjny w zakładkę Tokens, pojawi się tutaj Token nowego użytkownika. Mam tu dwa Tokeny, jeden należy do innego testowego usera.
+
+![67](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/67.png?raw=true)
+
+Zalogujmy się teraz na konto nowego użytkownika używając utworzonego przez nas endpoint'u umożliwiającego logowanie.
+
+![68](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/68.png?raw=true)
+
+Logowanie powiodło się. Na górze po prawej widać nazwe naszego użytkownika. Wyświetlany jest status HTTP 200 OK i nasz key czyli Token.
+
+![69](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/69.png?raw=true)
+
+Gdy wejdziemy teraz w widok listy użytkowników, wyświetla nam się tam nasz nowy user.
+
+![70](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/70.png?raw=true)
+
+
+#### Prosty licznik wizyt z użyciem cookies
+
+Utworzyłam nowy widok, który nazwałam counter. Do zaimplementowania licznika mówiłam zaimportować dwie rzeczy:
+
+![71](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/71.png?raw=true)
+
+Utworzyłam obiekt HttpResponse. Za pomocą if'a sprawdzam, czy w Cookies przechowywane są już jakieś informacje o ilości wizyt, jeśli nie to znaczy, że weszliśmy na stronę pierwszy raz. Wyświetlana jest odpowiednia wiadomość i za pomocą metody set_cookie() przypisujemy plikowi cookie o nazwie "visits" wartość 1. Jeśli tak, to pobierany jest plik cookie z ilością odwiedzin i zapisywany jako int. Wypisywany jest odpowiedni tekst i zwiększana jest wartość w pliku "visits".
+
+![72](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/72.png?raw=true)
+
+Musiałam również w url dla projektu dodać ścieżkę z tym widokiem.
+
+![73](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/73.png?raw=true)
+
+Teraz, jak wejdziemy na stronę po raz pierwszy ukazuje nam się napis:
+
+![74](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/74.png?raw=true)
+
+Gdy wciśniemy F12 i wejdziemy w Dane -> Ciasteczka to ukazuje nam się plik visits z wartością 1. 
+
+![75](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/75.png?raw=true)
+
+Gdy odświeżymy stronę liczba odwiedzin zmienia się i wyświetlany zostaje inny napis.
+
+![76](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/76.png?raw=true)
+
+W konsoli wartość odwiedzin również zmieniła się.
+
+![77](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium4oraz6/screenshots/77.png?raw=true)
+
+Warto zaznaczyć, że licznik ten będzie zwiększał liczbę odwiedzin dla jednej sesji. Znaczy to, że liczba wyświetleń będzie rosła, gdy mamy włączoną ciągle tą samą przeglądarkę i nie wyłączaliśmy jej. Możemy zamknąć kartę z tą stroną i po jakimś czasie znowu na nią wejść, ale nie możemy zamknąć zupełnie przeglądarki. Spowoduje to usunięcie naszego pliku visits i przy kolejnym włączeniu przeglądarki ukaże się wiadomość, że jeszcze nigdy nie odwiedziliśmy tej strony.
+
