@@ -111,4 +111,97 @@ Wynikiem działania programu jest None i knag. None jest wartością z przestrze
 
 ![24](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/24.png?raw=true)
 
+##### TTL
+TTL (Time to live) określa jak długo może żyć wybrany klucz. Po określonym czasie jest on automatycznie usuwany. SETEX jest metodą, która tworzy klucz wraz z wartością i przypisuje mu czas w sekundach po jakim na zostać usunięty. Jej odpowiednikiem jest użycie dwóch metod:
+- SET mykey value
+- EXPIRE mykey seconds.
+
+Przykład użycia SETEX:
+
+![25](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/25.png?raw=true)
+
+Ustawiam czas życia dla klucza k o wartości kamila na 20 sekund, wyświetlam aktualny czas i wartość przypisaną do klucza. Czekam 10 sekund, nastepnie ponownie wyświetlam to samo, czekam 15 sekund i po tym czasie klucz już został usunięty, dokładnie 5 sekund temu, dlatego wyświetlane jest None.
+
+![26](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/26.png?raw=true)
+
+To samo ale za pomocą SET i EXPIRE:
+
+![27](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/27.png?raw=true)
+
+![28](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/28.png?raw=true)
+
+##### Zbiory
+Zbiory to nieuporządkowane kolekcje unikalnych ciągów znakowych (stringów). Podstawowymi komendami używanymi do pracy ze zbiorami do SADD i SMEMBERS. Pierwsza z nich dodaje określony element do zbioru o danym kluczu, a druga zwraca wszystkie elementy zbioru o podanym kluczu. Poniższy kod dodaje 4 wartości do zbioru, a następnie wypisywane są wszystkie jego elementy.
+
+![29](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/29.png?raw=true)
+
+![30](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/30.png?raw=true)
+
+Elementy nie są wyświetlane w kolejności, w jakiej zostały dodane do zbioru, jako że jest to kolekcja nieuporządkowana. Gdy włączymy Redis-cli i użyjemy komendy SMEMBERS, tam kolejność też jest inna.
+
+![31](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/31.png?raw=true)
+
+Zgodnie z zasadą działania zbiorów, napisany program zwróci za każdym uruchomieniem elementy w innej kolejności.
+
+Na zbiorach można wykonywać różne operacje logiczne, np. różnicę zbiorów (SDIFF), część wspólną (SINTER) i sumę (SUNION). Poniżej znajduje się kod wykorzystujący te metody. Utworzyłam do tego dodatkowy zbiór o kluczu s2.
+
+![32](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/32.png?raw=true)
+
+Najpierw wyświetlam zbiór o kluczu s, potem o s2, by zobaczyć jak wyglądają. Następnie wyświetlana jest różnica, część wspólna i na końcu suma zbiorów.
+
+![33](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/33.png?raw=true)
+
+##### Posortowane zbiory
+Posortowane zbiory są podobne do zwykłych zbiorów. Różnica polega na tym, że każdy element posortowanego zbioru jest powiązany z oceną, wagą, która używana jest w celu uporządkowania posortowanego zestawu od najmniejszej do największej wagi. Chociaż elementy zbioru są unikalne to wagi mogą się powtarzać. Elementy układane są wtedy w kolejności alfabetycznej. Do dodawania elementów do posortowanego zbioru używana jest komenda ZADD, a do wyświetlania elementów konkretnego zbioru komenda ZRANGE.  
+
+![34](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/34.png?raw=true)
+
+![35](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/35.png?raw=true)
+
+Elementy wyświetlane są według wagi, od najmniejszej do największej. Tak samo stanie się, gdy w kodzie zmienie kolejność dodawania elementów i wagi:
+
+![36](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/36.png?raw=true)
+
+![37](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/37.png?raw=true)
+
+Elementy ponownie zostały ustawione według wagi, mimo że w kodzie nie są wpisane w kolejności rosnącej. 
+
+Sprawdźmy jeszcze, czy na pewno, gdy wszystkie elementy będą miały taką samą wagę, to zostaną one ustawione alfabetycznie.
+
+![38](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/38.png?raw=true)
+
+![39](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/39.png?raw=true)
+
+Jak widać elementy zostały ustawione alfabetycznie.
+
+Za pomocą komendy ZRANGE można wyświetlić też wagi elementów. Zmienie troszkę kod z powyższego przykładu dodając parametr withscores o wartości True do zrange:
+
+![40](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/40.png?raw=true)
+
+Sprawia to, że przy wypisywaniu elementów wypisywane są one wraz z wagami:
+
+![41](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/41.png?raw=true)
+
+Istnieją metody ZPOPMAX i ZPOPMIN. Pierwsza z nich zwraca i usuwa element zbioru uporządkowanego o największej wadze, a druga robi to samo z elementem o najmniejszej wadze. Poniżej kod z ich wykorzystaniem:
+
+![42](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/42.png?raw=true)
+
+![43](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/43.png?raw=true)
+
+Najpierw wyświetlam zbiór uporządkowany. Następnie zwracam i usuwam element o największej wadze, potem o najmniejsze, a na końcu wyświetlany zostaje zbiór po wykonanych na nim operacjach. 
+
+Metoda ZINCRBY używane jest to zwiększenia wagi wybranego elementu, ZCOUNT służy do zwrócenia ilości elementów o wadze z podanego przedziały, a ZSCORE wyświetla wagę elementu. Napisałam kod, który wykorzystuje te metody:
+
+![44](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/44.png?raw=true)
+
+![45](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/45.png?raw=true)
+
+Najpierw wyświetlam cały uporządkowany zbiór, by mieć do czego się odwołać i sprawdzić czy program poprawnie działa. Następnie zwiększyłam wagę elementu kamila o 10. Wcześniej wagą tego elementu było 10, po zwiększeniu jest to 20. Później wyświetlana jest ilość elementów, których waga znajduje się w przedziale od 50 do 250. Jest ich 3 a ich wagi to: 62, 104, 222. Na koniec wyświetlana jest waga elementu mateusz.
+
+
+
+
+
+
+
 
