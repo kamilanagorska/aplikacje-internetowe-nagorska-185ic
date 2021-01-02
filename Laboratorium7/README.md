@@ -5,6 +5,11 @@ Redis jest skrótem od REmote DIctionary Service. Jest to nowoczesna baza danych
 Magazyn klucz–wartość korzysta z asocjacyjnej tablicy (znanej również jako mapa lub słownik) jako podstawowego modelu danych. W tym modelu dane są reprezentowane jako zbiór par klucz–wartość, tak że każdy możliwy klucz pojawia się najwyżej jeden raz. Dane przechowywane są w pamięci RAM, dzięki czemu dostęp do nich jest znacznie szybszy niż w przypadku tradycyjnych rozwiązań. Serwer Redis ma gigantyczne znaczenie dla cache oraz na przechowywanie danych sesji klientów. Poprawia czas wczytywania i wydajność strony. Im większa i chętniej odwiedzana jest dana strona, tym większy pozytywny wpływ na jej działanie.
 
 
+#### Spis treści:
+- [Redis - ćwiczenia](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#redis---zadania)
+- Django + Redis + Celery
+
+
 #### Redis - zadania
 Redisa zainstalowałam za pomoca Dockera, jako że miałam go już zainstalowanego na komputerze (używam go do projektu na innych zajęciach).
 
@@ -197,6 +202,327 @@ Metoda ZINCRBY używane jest to zwiększenia wagi wybranego elementu, ZCOUNT sł
 ![45](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/45.png?raw=true)
 
 Najpierw wyświetlam cały uporządkowany zbiór, by mieć do czego się odwołać i sprawdzić czy program poprawnie działa. Następnie zwiększyłam wagę elementu kamila o 10. Wcześniej wagą tego elementu było 10, po zwiększeniu jest to 20. Później wyświetlana jest ilość elementów, których waga znajduje się w przedziale od 50 do 250. Jest ich 3 a ich wagi to: 62, 104, 222. Na koniec wyświetlana jest waga elementu mateusz.
+
+##### Hashe
+Hashe są mapami między polami ciągów a wartościami ciągów. Są idealnym typem danych do reprezentowania obiektów, np. użytkownik z wieloma polami takimi jak imię, nazwisko, wiek. Hashe są też nazywane słownikami lub tablicami asocjacyjnymi. Komenda HSET ustawia pole w hashu przechowywanym w kluczu o podanej wartości. Jeśli taki klucz nie istnieje, jest on tworzony, jeśli już istnieje to jest on nadpisywany. Poniżej znajduje się kod, który wykorzystuje tą metodę:
+
+![46](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/46.png?raw=true)
+
+Można powiedzieć, że stworzyłam obiekt użytkownika, który posiada wartości imię, nazwisko i hasło. Do wyświetlenia wszystkich tych danych użyję w Redis-cli komendy HGETALL. Zwraca ona wszystkie pola i wartości hasha przechywowanego w kluczu.
+
+![47](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/47.png?raw=true)
+
+Istnieje również komenda HGET, która pozwala nam pobrać wartość jedynie jednego pola danego klucza:
+
+![48](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/48.png?raw=true)
+
+Polecenie HKEYS zwraca nazwy pól przechowywanych w wybranym kluczu. HEXISTS zwraca 1/True lub 0/False w zależności, czy podane pole istnieje w danym kluczu. HVALS zwraca wszystkie wartości przechowywane w słowniku. Napisałam kod, w którym wykorzystuje podane wyżej trzy metody:
+
+![49](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/49.png?raw=true)
+
+![50](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/50.png?raw=true)
+
+Najpierw wypisałam wszystkie nazwy pól przechowywane w słowniku o kluczu h. Są to name, lname i password. Następnie sprawdziłam czy w słowniku tym znajduje się pole name. Program zwrócił wartość True, bo takie pole się tam znajduje. Sprawdziłam też istnienie pola age. Zwrócone zostało False, bo takie pole nie istnieje. Na koniec program wypisał mi wszystkie wartości przechowywane w hashu. 
+
+##### Publish-subscribe
+W skrócie pub-sub, jest to wzorzec przesyłania wiadomości. Komponenty wysyłające wiadomości (publishers) nie wysyłają ich do konkretnie określonej listy odbiorców, nie wiedzą nawet czy ktokolwiek wiadomość otrzyma. Komponenty odbierające wiadomość (subscribers) nie wiedzą kto wysyła daną wiadomość. Obie strony dzieli „kanał komunikatów”. To ten byt na który publikujący wypycha wiadomości i z którego subskrybent owe wiadomości odbiera. Największą zaletą tego wzorca jest łatwość dodawania kolejnych elementów do już istniejącej układanki. 
+
+W Redisie kanał komunikatów jest pewnym kluczem. W moim przykładzie będzie to klucz o nazwie "messbr". Poniżej znajduje się kod subskrybent:
+
+![51](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/51.png?raw=true)
+
+Metoda SUBSCRIBE "subskrybuje" klienta do określonych kanałów. Po odpaleniu tego kodu w konsoli wyświetla on:
+
+![52](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/52.png?raw=true)
+
+Jest to wiadomość powitalna, informująca nas, że połączyliśmy się. Po wyświetleniu wiadomości program blokuje się w oczekiwaniu na kolejne komunikaty. Gdy teraz w Redis-cli użyjemy komendy PUBLISH, która publikuje wiadomość do wybranego kanału:
+
+![53](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/53.png?raw=true)
+
+Wiadomość ta zostanie odrazu wyświetlona za pomocą naszego programu:
+
+![54](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/54.png?raw=true)
+
+Pozwala nam to na szybką komunikację międzyprocesową i jeśli zajdzie potrzeba to też na komunikację między osobnymi maszynami. Dodatkowo można się subskrybować nie na konkretny kanał, a na pattern. Oznacza to, że jeśli w aplikacji mamy kanały:
+- messbr_1
+- messbr_2
+- messbr_3
+i chcielibyśmy, korzystając z jednego subskrybenta, podłączyć się do tych kanałów, możemy po prostu podłączyć się pod pattern "messbr_*". Poniżej kod, który podłącza nas do takiego pattern:
+
+![55](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/55.png?raw=true)
+
+Metoda PSUBSCRIBE "subskrybuje", podłącza nas do wybranego pattern. Kod odpalony w konsoli wyświetla nam na razie jedynie wiadomość powitalną i oczekuje na kolejne komunikaty:
+
+![56](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/56.png?raw=true)
+
+Gdy teraz w Redis-cli opublikujemy kilka wiadomości na różnych kanałach, ale znajdujących się w jednym pattern:
+
+![57](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/57.png?raw=true)
+
+To nasz program odrazu wyświetli je wszystkie:
+
+![58](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/58.png?raw=true)
+
+##### Strumienie
+Strumienie to nowy typ danych wprowadzony w Redis 5.0, który modeluje strukturę danych dziennika w bardziej abstrakcyjny sposób. Jest to typ danych, który pracuje w trybie „append-only”. Znaczy to tylko tyle, że wiadomości które "wlejemy" do strumienia lądują na jego końcu. Nie można dodawać elementów w konkretne miejsce strumienia. W odróżnieniu od list i pub-sub, strumienie pozwalają na przesyłanie danych nieco bardziej ustrukturyzowanych niż stringi. Każda wiadomość w strumieniu ma swoje unikalne ID, generowane przez Redisa lub ustawione przez użytkownika.
+
+Podstawowymi poleceniami używanymi do pracy ze strumieniami są XADD oraz XREAD. Pierwsza z nich dołącza określony wpis do strumienia o określonym kluczu. Wpis składa się z zestawu pole-wartość. XREAD odczytuje dane z jednego lub wielu strumieni, zwracając tylko wpisy o ID większym niż ostatni odebrany zgłosozny przez "dzwoniącego". Polecenie to ma opcję blokowania. Poniżej kod z wykorzystaniem tych dwóch metod:
+
+![59](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/59.png?raw=true)
+
+Parametr block określa czy i jeśli tak to na ile milisekund funkcja ma być zablokowana. Umożliwia to używanie jej w pętli. Program dodaje do strumienia słownik i odczytuje z niego podaną w parametrze country ilość elementów. Efektem wykonania programu jest:
+
+![60](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/60.png?raw=true)
+
+Liczba, która została wyświetlona to ID elementu strumienia. 
+
+Dane ze strumienia nie są kasowane. Ma to kilka konsekwencji, np. jeśli program z poprzedniego „rozdziału” zostanie uruchomiony np. 5 razy to zawsze będzie odczytywana ze strumienia pierwsza dodana do niego wartość, mimo że za pomocą xadd będą dodawane nowe wartości. By to sprawdzić uruchomiłam mój program jeszcze 3 razy. Za 4. razem zmieniłam count na 3:
+
+![61](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/61.png?raw=true)
+
+![62](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/62.png?raw=true)
+
+W odpowiedzi otrzumałam trzy ostatnie elementy strumienia. 
+
+![63](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/63.png?raw=true)
+
+Jest to zachowanie pożądane, ponieważ musimy jawnie oznaczyć wiadomość jako przetworzoną. Sprawia to że żaden niechciany exception nie spowoduje, że elementy będą nam ginąć.
+
+W poprzednim programie zdefiniowałam "0-0", czyli chęć otrzymywania zawartości od początku. Jeśli w miejscu tym zamienimy "0-0" ma "$" to będziemy otrzymywać jedynie nowe elementy. Poniżej kod wykorzystujący tą właściwość, jak i argument block.
+
+![64](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/64.png?raw=true)
+
+Przed jego uruchomieniem należy wyczyścić naszą bazę. Można to zrobić w Redis-cli za pomocą FLUSHALL.
+
+![65](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/65.png?raw=true)
+
+Teraz, po uruchomieniu programu co 50ms wyświetla nam się pusta tablica. 
+
+![66](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/66.png?raw=true)
+
+Gdy w Redis-cli dodamy wpis do strumienia za pomocą XADD:
+
+![67](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/67.png?raw=true)
+
+To nasz program pokaże ten nowy element:
+
+![68](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/68.png?raw=true)
+
+Ulepszony kod:
+
+![69](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/69.png?raw=true)
+
+Tylko pierwsze XREAD jest z "$". Kolejne zawierają ID ostatnio odczytaj wiadomości. Bez tego wiadomości wysłane pomiędzy jednym blokiem a drugim będą ginąć. Po odpaleniu program czeka na jakieś wiadomości:
+
+![70](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/70.png?raw=true)
+
+Gdy za pomocą Redis-cli dodam do strumienia element:
+
+![71](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/71.png?raw=true)
+
+To zostanie od wyświetlony przez nasz program:
+
+![72](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/72.png?raw=true)
+
+Elementu nadal po odebraniu zostają w strumieniu. Potwierdzenie przetworzenia to wywołanie metody XACK. Jednak metoda ta jest dostępna w przypadku grupowania konsumentów (programów podłączonych do strumienia), więc jeśli chcemy zrobić to bez grupowania musimy użyć XDEL. Metoda ta usuwa okreslony wpis ze strumienia i zwraca liczbę usuniętych wposów, która może się różnić od liczby ID przekazanych do polecenia, jeśli pewnie ID nie istnieją.
+
+![73](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/73.png?raw=true)
+
+Po uruchomieniu programu czeka on na wiadomości:
+
+![74](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/74.png?raw=true)
+
+Dodałam dwa elementy do strumienia:
+
+![75](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/75.png?raw=true)
+
+Zostały one odebrane:
+
+![76](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/76.png?raw=true)
+
+Różnicą w tym kodzie jest to, że wiadomości po odebraniu są usuwane. Można to sprawdzić używając XREAD:
+
+![77](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/77.png?raw=true)
+
+Poprosiłam o wyświetlenie 5 elementów, a zostały wyświetlone tylko dwa z poprzednich przykładów. Elementy dodane przeze mnie przed chwilą zostały usunięte.
+
+##### Pipelining
+Pipelining to „przetwarzanie potokowe”. Często mamy do wykonania na kluczach jakąś sekwencję operacji. Do komunikacji z Redisem wykorzystywany jest protokół TCP. Przesyłanie danych przez sieć zawsze trwa. Szczególnie w sytuacji, kiedy wykonujemy kilka (tysięcy) operacji następujących po sobie. Aby skrócić RTT (Round Trip Time) Redis udostępnia mechanizm pipelining. Pozwala on wysłać wiele komend do Redisa „za jednym razem” – oszczędzamy tym samym czas którego potrzebujemy żeby przesłać dane przez sieć. Poniżej znajduje się przykład, który idealnie pokazuje różnicę między podejściem tradycyjnym a pipeliningiem:
+
+![78](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/78.png?raw=true)
+
+![79](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/79.png?raw=true)
+
+Pierwszy czas jest czasem tradycyjnego sposobu, a czas drugi to czas pipeliningu. Jak widać różnica w czasach jest spora i oczywiście jest znacznie bardziej zauważalna, gdy wartości i oraz j są większe.
+
+Trzeba zapamiętać, że istnieje zagrożenie wysycenia pamięci RAM. Redis w momencie pipe.execute() zwraca rezultat każdej operacji, więc oczywistym jest że wyniki wszystkich komend musi kolejkować w pamięci. Dlatego trzeba z  głową dobierać maksymalną ilość komend uruchamianych pod pipelinem. Dodatkowym atutem podejścia z użyciem pipelining jest to, że przekłada się na wzrost wydajności samego serwera Redisa. Wynika to z faktu że dla Redisa koszt wyciągnięcia jakieś danej z klucza jest niski, ale odesłanie jej via TCP – już niekoniecznie. Pipeline sprawia, że Redis odpowiada „raz, a dobrze”.
+
+##### Transakcje
+Transakcje to jedno z podstawowych pojęć współczesnych systemów baz danych. Umożliwiają one współbieżny dostęp do zawartości bazy danych. Ich istotą jest integrowanie kilku operacji w jedną niepodzielną całość. Uzyte wcześniej pipeliny idealnie łączą się z ideą teansakcyjności. Kawałek kodu, który wcześniej został pokazany jest w pełni transakcyjny. Metoda PIPELINE, która zwraca context managera może przyjąć dodatkowy parametr o nazwie transaction mający domyślną wartość ustawioną na True.
+
+Transakcje w Redisie zapewniają, że komendy pod transakcją wykonują się sekwencyjnie i nie ma możliwości by taki ciąg komend został przerwany przez innego klienta tego samego serwera oraz, że ciąg komend pod transakcją jest atomowy. Albo wszystkie komendy zostaną wykonane albo żadna. 
+
+Do pracy z transakcjami używane są komendy:
+- MULTI
+- EXEC
+- DISCARD
+- WATCH.
+
+MULTI rozpoczyna transakcję. Kolejne polecenia są umieszczane w kolejce do atomowego wykonania przy użyciu EXEC. Zwraca ona rezultat wykonanych komend. DISCARD opróżnia wszystkie poprzednio umieszczone w kolejce polecenia. WATCH zaznacza klucze, które mają być obserwowane w celu warunkowego wykonania transakcji. Pozwala na detekcję tego, czy klucze nie zmieniły się od czasu kiedy zaczęliśmy je obserwować. Jeśli się zmieniły to komenda EXEC zakończy się błędem.
+
+Transakcja może się nie udać z dwóch powodów: przed wykonaniem EXEC np. składnia komendy jest niepoprawna, po wykonaniu EXEC np. efekt wykonania się komendy nie jest poprawny (np. komenda niedopasowana do typu). W pierwszym przypadku cała transakcja zostanie odrzucona, w drugim – zostanie wykonana ta część transakcji która się udała. Zachowanie w drugim przypadku nie jest spójne z bazami SQL, gdzie taka transakcja zostałaby odrzucona.
+
+Przykład użycia opisanych metod:
+
+![80](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/80.png?raw=true)
+
+Najpierw oznaczamy klucz key jako ten do obserwowania. Nastepnie rozpoczynamy transakcję. Za pomocą metody GET pobieramy wartość klucza. Otrzymujemy QUEUED. Dzieje się tak ponieważ, połączenie Redis jest w kontekście żądania MULTI. Polecenie jest umieszczene w kolejce, która zostanie wykonana po wywołaniu EXEC. Następnie wykonujemy właśnie metodę EXEC, która zwraca nam informację o niepowodzeniu. 
+
+##### Lua
+Lua to skryptowy język programowania. Pierwotnie projektowany był w celu rozszerzenia funkcjonalności różnych aplikacji, jednak jest często używany jako samodzielny język. Składnia tego języka jest prosta i przypomina składnię większości języków programowania. W odróżnieniu od Pythona, Lua jest daleki od podejścia „batteries included”, co sprawia, że pełny interpreter tego języka to zaledwie 247 kB. A to natomiast powoduje, że w pełni pasuje do tego do czego był tworzony – do rozszerzania możliwości innych aplikacji. I dokładnie w takim kontekście wykorzystuje go Redis. Poniżej znajduje się przykład kodu z wykorzystaniem języka Lua:
+
+![81](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/81.png?raw=true)
+
+Wykonywana jest komenda EVAL, do której przekazywane jest ciało skryptu napisanego w LUA. Redis odbiera ten kod, wykonuje i zwraca rezultat:
+
+![82](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/82.png?raw=true)
+
+Pierwszym argumentem EVAL jest skrypt Lua. Drugi argument parametru EVAL to ilość argumentów które można przekazać do skryptu. Jeśli podamy tam wartość n to kolejne n argumentów, które przekażemy do funkcji będą przekazane również do skryptu. W skrypcie będą one dostępne w tabeli KEYS (Lua indeksuje tabele od 1!). Wszystko przekazane po określonej liczbie n, zostanie przekazane do tabeli ARGV. Kod z wykorzystaniem tablic KEYS i ARGV:
+
+![83](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/83.png?raw=true)
+
+Określamy w kodzie, że dwa pierwsze parametry będą znajdować się w tablicy KEYS, a kolejne w tabeli ARGV. Skrypt odczytuje dane i je zwraca:
+
+![84](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/84.png?raw=true)
+
+Inny przykład to wygenerowanie listy 15 liczb:
+
+![85](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/85.png?raw=true)
+
+![86](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/86.png?raw=true)
+
+Działa to tak samo jak w innych językach programowania. Definiujemy tabelę arr. Mamy pętlę for która podstawia do tej tabeli kolejno zwiększające się liczby aż do 15. Na końcu tabela jest zwracana, by móc ją wyświetlić. 
+
+Przykład pracy w formacie danych JSON:
+
+![87](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/87.png?raw=true)
+
+Przekazujemy jedną zmienną do tablicy KEYS, ale jest ona w formacie JSON i składa się z x=20 i y=22. Skrypt w języku LUA pobiera tą daną, dekoduje a następnie dodaje x do y.
+
+![88](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/88.png?raw=true)
+
+Skrypty w Redisie pojawiły się by rozwiązać problem sytuacji kiedy potrzebujemy coś pobrać z Redisa, przetworzyć i zapisać wynik z powrotem lub rozpropagować go po większej ilości kluczy. Celem ogólnym jest zmniejszenie ilości interakcji po sieci przez przeniesienie części logiki właśnie do Redisa. Żeby można było tego dokonać, trzeba umieć wykonywać komendy Redisowe ze skryptów Lua. Przykład:
+
+![89](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/89.png?raw=true)
+
+Wykonywany jest skrypt, który odczytuje wartość z pod klucza key1, dodaje do niej wartość przekazaną jako argument i wynik zapisuje jako wartość w kluczu key2. Skrypt zwraca nil, dlatego program najpierw wyświetla None, a potem dopiero wynik dodawania czyli 222.
+
+![90](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/90.png?raw=true)
+
+Inny przykład:
+
+![91](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/91.png?raw=true)
+
+Najpierw przygotowujemy dane. Określana jest nazwa uprawnienia, wypełniana jest grupa użytownikami i ich ID i dodane jest uprawnienie do listy przechowującej wszystkie możliwe uprawnienia. Do skryptu Lua przekazywane jest ID grupy i uprawienie, które chcemy rozpropagować. Skrypt sprawdza czy uprawnienie jest poprawne czyli czy znajduje się w zbiorze poprawnych i jeśli tak to dla każdego użytkownika w grupie dodaje uprawnienie. Ewentualną duplikację uprawnień załatwiamy odpowiednim typem danych, klucz „user_permissions:ID” jest SETtem, więc nie pozwala na duplikacje. Skrypt zwraca true/1, gdy dodanie uprawnienia powiodło się:
+
+![92](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/92.png?raw=true)
+
+Redis pozwala na zapisanie ciała skruptu u siebie i posługiwanie się skrótem SHA w celu jego uruchomienia. Skrypt zapisujemy komendą SCRIPT LOAD gdzie jako argument podajemy skrypt a zwraca on nam skrót, którego możemy użyć w celu uruchomienia naszego kawałka kodu LUA. Możemy tak zedytować nasz powyższy kod:
+
+![93](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/93.png?raw=true)
+
+##### Notyfikacje redisowe
+Notyfikacje to powiadomienia które wysyła Redis (via publish na konkretnym kanale) generowane w momencie pracy na innych kluczach. Można je włączyć na dwa sposoby. Jeden z nich jest trwały, tj ustawienie jest respektowane nawet po restarcie Redisa, a drugi pozwala na konfigurację ulotną. Oczywiście tę drugą można zapisać i tym samym sprawić, że zostanie zapamiętana.
+
+Program, który nasłuchuje każdą zmianę klucza wynikającą z komend dedykowanych stringowi:
+
+![94](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/94.png?raw=true)
+
+Program wypisuje wiadomość powitalną i oczekuje na zmiany:
+
+![95](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/95.png?raw=true)
+
+W Redis-cli ustawiamy wartość klucza test_key na 22:
+
+![96](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/96.png?raw=true)
+
+Co powoduje wyświetlenie tego przez program:
+
+![97](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/97.png?raw=true)
+
+Teraz w Redis-cli wykonujemy komendę APPEND:
+
+![98](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/98.png?raw=true)
+
+Na co program reaguje wyświetleniem powiadomienia:
+
+![99](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/99.png?raw=true)
+
+Teraz usuńmy klucz:
+
+![100](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/100.png?raw=true)
+
+Wykonajmy komendę LPUSH:
+
+![101](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/101.png?raw=true)
+
+Nasz program nie zareagował na tą zmianę, ponieważ publikuje on tylko zdarzenia wygenerowane w wyniku użycia komend dedykowanych stringom.
+
+![102](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/102.png?raw=true)
+
+Poniższy kod działa podobnie, ale po wykonaniu komendy SET jako wiadomość przyjdzie nazwa klucza, na której komenda ta została wykonana:
+
+![103](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/103.png?raw=true)
+
+Po uruchomieniu kodu wyświetlana jest wiadomość powitalna:
+
+![104](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/104.png?raw=true)
+
+Następnie, gdy wykonam komendę SET w Redis-cli:
+
+![105](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/105.png?raw=true)
+
+Program wyświetli w wiadomości nazwę klucza, na której wykonany został SET:
+
+![106](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/106.png?raw=true)
+
+##### Walrus
+Walrus to alternatywny sposób pracy z Redisem. Instalacja:
+
+![107](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/107.png?raw=true)
+
+Przykładowy kod:
+
+![108](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/108.png?raw=true)
+
+Walrus ukrywa za wygodną implementacją komendy Redisowe dając tym samym API naśladujące Pythonowe rozwiązania.
+
+Walrus umożliwia tworzenie modeli:
+
+![109](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/109.png?raw=true)
+
+Utworzony został model książki, która posiada id (typ UUIDField, atomatycznie staje się kluczem głównym), tytuł, opis, ilość stron i tagi. Na końcu utworzona została jedna konkretna książka.
+
+Uruchomienie tego kodu generuje kilka kluczy w Redisie:
+
+![110](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/110.png?raw=true)
+
+Za pomocą HGETALL można wyświetlić wszystkie wartości przypisane do naszej książki:
+
+![111](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/111.png?raw=true)
+
+##### Nieużywane klucze
+Redis w prosty sposób umożliwia sprawdzenie ile czasu minęło od użycia klucza:
+
+![112](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/112.png?raw=true)
+
+##### Szukanie dużych kluczy
+Redis dostarcza narzędzie pozwalające określić największe elementy:
+
+![113](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/113.png?raw=true)
+
+
+
 
 
 
