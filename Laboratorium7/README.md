@@ -4,6 +4,8 @@ Python + Redis + Django
 Redis jest skrótem od REmote DIctionary Service. Jest to nowoczesna baza danych NoSQL typu klucz-wartość. 
 Magazyn klucz–wartość korzysta z asocjacyjnej tablicy (znanej również jako mapa lub słownik) jako podstawowego modelu danych. W tym modelu dane są reprezentowane jako zbiór par klucz–wartość, tak że każdy możliwy klucz pojawia się najwyżej jeden raz. Dane przechowywane są w pamięci RAM, dzięki czemu dostęp do nich jest znacznie szybszy niż w przypadku tradycyjnych rozwiązań. Serwer Redis ma gigantyczne znaczenie dla cache oraz na przechowywanie danych sesji klientów. Poprawia czas wczytywania i wydajność strony. Im większa i chętniej odwiedzana jest dana strona, tym większy pozytywny wpływ na jej działanie.
 
+Celery to pakiet oprogramowania do kolejkowania zadań oparty na języku Python, który umożliwia wykonywanie asynchronicznych obciążeń obliczeniowych sterowanych na podstawie informacji zawartych w komunikatach tworzonych w kodzie aplikacji przeznaczonym dla kolejki zadań Celery. Może być również używany do wykonywania powtarzalnych okresowych (tj. zaplanowanych) zadań. Najlepiej używać go w połączeniu z message broker, najbardziej typowym uzywanym z Celery jest Redis. Używany jest do przechowywania komunikatów generowanych przez kod aplikacji opisujących pracę do wykonania w kolejce zadań Celery. Służy również jako przechowywanie wyników pochodzących z kolejek Celery, które są następnie pobierane przez konsumentów kolejki.
+
 
 #### Spis treści:
 - [Redis - ćwiczenia](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#redis---zadania)
@@ -520,6 +522,93 @@ Redis w prosty sposób umożliwia sprawdzenie ile czasu minęło od użycia kluc
 Redis dostarcza narzędzie pozwalające określić największe elementy:
 
 ![113](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/113.png?raw=true)
+
+
+#### Django + Redis + Celery
+Do wykonania tego polecenia zainstalowałam Redisa na komputerze. Nie korzystałam już z Dockera. 
+
+![114](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/114.png?raw=true)
+
+Prócz pakietów Pythona: Django, Celery i redis musiałam zainstalować też Pillow i django-widget-tweaks, gdzie Pillow to pakiet niezwiązany z Celery do przetwarzania obrazu, a Django Wdget Tweaks to wtyczna Django zapewniająca elastyczność w sposobie renderowania danych wejściowych formularzy.
+
+By zintegrować Celery z projektem Django należy utworzyć plik celery.py w folderze naszego projektu. W nim importujemy pakiet os i klasę Celery z pakietu celery.
+
+![115](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/115.png?raw=true)
+
+Używamy modułu os do powiązania zmiennej DJANGO_SETTINGS_MODULE z ustawieniami naszego projektu Django. Następnie tworzymy instancję klasy Celery, aby utowrzyć zmienną instancji celery_app. Aktualizujemy konfigurację aplikacji Celery za pomocą ustawień i na końcu "mówimy" nowo utworzonej celery_app, by automatycznie wykrywała zadania w projekcie. 
+
+W pliku settings.py na końcu zdefiniowałam ustawienia dotyczące Celery:
+
+![116](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/116.png?raw=true)
+
+Ustawienia te informują Celery, by używał Redis jako message broker, a także gdzie się z nim łączyć. Zdefiniowany został typ wiadomości jako MIME application/json. Inne typy będą odrzucane z błędem. 
+
+By upewnić się, że wcześniej utworzona i skonfigurowana aplikacja Celery zostanie "wstrzyknięta" do aplikacji Django, gdy zostanie uruchomiona należy w głównym skrypcie init.py (z pokreśleniami po bokach) zaimportować aplikację Celery i zarejestrować ją jako symbol przestrzeni nazw w pakiecie Django image_parroter.
+
+![117](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/117.png?raw=true)
+
+W aplikacji thumbnailer utworzyłam plik tasks.py. Na początku, by upewnić się, że wszystko działa utworzyłam tam proste zadanie dodające dwie liczby.
+
+![118](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/118.png?raw=true)
+
+W INSTALLED_APPS w pliku settings.py należy dodać aplikację widget_tweaks.
+
+![119](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/119.png?raw=true)
+
+By sprawdzić, czy nasz task z dodawaniem działa należy mieć odpalony redis-server w jednym terminalu. W drugim należy uruchomić program Celery:
+
+![120](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/120.png?raw=true)
+
+Wyświetlony zostaje tutaj nasz task adding_task. W trzecim terminalu można przetestować adding_task:
+
+![121](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/121.png?raw=true)
+
+Jak widać, działa! Metoda .delay() używana jest do przekazywania wszelkich niezbędnych parametrów do obiektu zadania, a także inicjowania wysyłania go do message broker'a i kolejki zadań. Wynikiem wywołania tej metody jest obiecana wartość zwracana typu celery.result.AsyncResult. Ta zwracana wartość zawiera informacje, takie jak identyfikator zadania, jego stan wykonania i stan zadania, a także możliwość dostępu do wyników wygenerowanych przez zadanie za pośrednictwem metody .get().
+
+W pliku tasks.py tworzę zadanie, które będzie tworzyło miniaturkę podanego obrazu i zwracało miniaturkę + oryginalne zdjęcie w pliku zip. Zacząć trzeba od odpowiednich importów. Potrzebne będzie nam, prócz os i shared_task używanych wcześniej, zipfile, by móc tworzyć pliki zip, PIL z pakietu Image, który umożliwia ładowanie i tworzenie nowych obrazów i django.conf.
+
+![122](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/122.png?raw=true)
+
+W zadaniu na początku przygotowujemy zmienne, których będziemy używac póżniej. Rozdzielamy ścieżkę do pliku na nagłówek i koniec. Końcem jest nazwa naszego pliku. Następnie nazwę tą dzielimy na nazwę i rozszerzenie. Tworzymy nazwę pliku zip, do którego będziemy zapisywać obrazy i przygotowujemy zmienną results, w której przechowywany jest adres URL, z którego będzie można pobrać zipa. 
+
+![123](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/123.png?raw=true)
+
+Dalej znajduje się sekcja try, w której otwieramy plik obrazu. Tworzymy plik zip i zapisujemy w nim oryginalny obraz. Następnie usuwana jest ścieżka do tego pliku. Poniżej znajduje się pętla for, w której kopiowany jest oryginalny obraz, tworzona jest miniaturka dla wymiarów w i h, tworzona jest również zmienna z nazwą miniaturki, zapisywana jest zmniejszona kopia oryginalnego obrazu pod inną nazwą i jest ona również zapisywana w archiwum zip. Na koniec usuwana jest ścieżka pliku z miniaturką. Jeśli nie uda się wykonać sekcji try, ponieważ np. chcemy uruchomić plik, który nie istnieje, to łapany i zwracany jest błąd. Na koniec zwracany jest URL zapisany pod zmienną results.
+
+![124](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/124.png?raw=true)
+
+W pliku settings.py definiuje lokalizacje, w której mogą znajdować się pliki obrazów i archiwa zip (MEDIA_ROOT), a także MEDIA_URL, IMAGES_DIR i tworzę warunek if, który w przypadku nie istniejących lokalizacji MEDIA_ROOT lub IMAGES_DIR, tworzy je.
+
+![125](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/125.png?raw=true)
+
+W pliku views.py utworzyłam 3 klasy. Pierwsza z nich to FileUploadForm(forms.Form), która jest po prostu formularzem z jednym polem wejściowym:
+
+![126](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/126.png?raw=true)
+
+Następną klasą jest HomeView. Jest to widok strony domowej. Posiada dwie metody. Pierwsza z nich get zwraca szablon i przekazuje mu formularz (FileUploadForm):
+
+![127](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/127.png?raw=true)
+
+Druga metoda to post. Konstruuje ona obiekt FileUploadForm przy użyciu danych przesłanych w żądaniu. Następuje weryfikacja danych, jeśli są one poprawne do plik zapisywany jest w IMAGES_DIR. Uruchamiane jest zadanie make_thumbnails. Pobierane jest id zadania i jego status. Status jest przekazywany do zwracanego szablonu. Jeśli dane są niepoprawne to zwracany jest formularz z błędami do szablonu home.html.
+
+![128](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/128.png?raw=true)
+
+Ostatnia klasa używana jest przez żądanie AJAX do sprawdzenia statusu zadania make_thumbnails.
+
+![129](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/129.png?raw=true)
+
+Utworzyłam plik urls.py w folderze aplikacji i zdefiniowałam w nim dwie ścieżki:
+
+![130](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/130.png?raw=true)
+
+Następnie zedytowałam plik urls.py w folderze projektu:
+
+![131](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/131.png?raw=true)
+
+Umieściłam w nim odwołanie do ścieżek z aplikacji i dodałam kawałek kodu, który umożliwia udostępnianie plików przesłanych przez użytkownika. 
+
+
+
 
 
 
