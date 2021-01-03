@@ -9,7 +9,7 @@ Celery to pakiet oprogramowania do kolejkowania zadań oparty na języku Python,
 
 #### Spis treści:
 - [Redis - ćwiczenia](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#redis---zadania)
-- Django + Redis + Celery
+- [Django + Redis + Celery](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#django--redis--celery)
 
 
 #### Redis - zadania
@@ -525,6 +525,9 @@ Redis dostarcza narzędzie pozwalające określić największe elementy:
 
 
 #### Django + Redis + Celery
+
+![132](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/132.png?raw=true)
+
 Do wykonania tego polecenia zainstalowałam Redisa na komputerze. Nie korzystałam już z Dockera. 
 
 ![114](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/114.png?raw=true)
@@ -607,9 +610,63 @@ Następnie zedytowałam plik urls.py w folderze projektu:
 
 Umieściłam w nim odwołanie do ścieżek z aplikacji i dodałam kawałek kodu, który umożliwia udostępnianie plików przesłanych przez użytkownika. 
 
+Utworzyłam szablon home.html, w którym wykorzystałam Bootstrapa, Bulmę i Fontawasome.
 
+![133](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/133.png?raw=true)
 
+W sekcji body znajduje się navbar Bootsrapa i poniżej formularz umożliwiający wybranie pliku.
 
+![134](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/134.png?raw=true)
+
+Na dole mamy sekcję ze skryptem:
+
+![135](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/135.png?raw=true)
+
+Tworzone jest odniesienie do pola wejściowego (input) pliku. Następnie, jeśli nastąpi zdarzenie change to wykonywana jest funkcja, która dodaje nazwę wybranego pliku do interfejsu użytkownika. 
+
+Poniżej znajduje się warunek if. Sprawdzamy, czy istnieje id task_id, które jest przekazywane z widoku HomeView. Wskazuje ono odpowiedź po przesłaniu zadania make_thumbnails. Tworzony jest odpowiedni adres URL do sprawdzania statusu zadania. Pobierany jest element, za pomocą którego wyświetlana będzie informacja o progresie. Wywoływana jest funkcja aktualizująca powyższy element (updateProgressTile) i wywoływana jest metoda setInterval(), która wykonuje pewną funkcję co określony czas (800ms):
+
+![136](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/136.png?raw=true)
+
+W funkcji wykonywanej co 800s do pobrania statusu zadania wykorzystywany jest już wcześniej poznany na zajęciach axios. Odpowiedź jest zapisywana i sprawdzana. Jeśli status jest równy "SUCCESS" to wywoływana jest funkcja clearTimer() (opisana kawałeczek dalej). Tworzony jest adres url, z którego pobierany będzie plik zip, tworzony jest element a jest on wstawiany na koniec sekcji body, nie jest om jednak wyświetlany. Definiowane jest łącze i plik, który zostanie pobrany, gdy użytkownik kliknie hiperłącze. Użytkownik jednak nic sam nie klika. Na elemencie a wywoływana jest funkcja click(), która sama wywołuje kliknięcie, co powoduje rozpoczęcie pobierania. Na koniec element a jest usuwany.
+
+![138](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/138.png?raw=true)
+
+W innym przypadku wywoływana jest funkcja clearTimer(). Przekazywany jest do niej argument w postaci tekstu z informacją o błędzie. Funkcja clearTimer czyści timer uruchomiony za pomocą setInterval() i zmienia tekst wyświetlany na stronie.
+
+![137](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/137.png?raw=true)
+
+Funkcja updateProgressTile, która wyświetla "progress images ..." i "porusza" kropkami:
+
+![139](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/139.png?raw=true)
+
+Gdy wejdziemy na strone ukazuje nam się guzik, który wciskamy by przesłać plik. Ważne jest, by przed odpaleniem strony mieć uruchomiony serwer Redis i aplikację Celery!
+
+Wyskakuje okno, gdzie możemy wybrać zdjęcie z plików na naszym komputerze:
+
+![140](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/140.png?raw=true)
+
+Po wybraniu pliku jego nazwa jest widoczna w polu formularza:
+
+![141](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/141.png?raw=true)
+
+Wciskamy Submit i wyświetlany jest tekst, że strona jest w trakcie przetwarzania obrazów:
+
+![142](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/142.png?raw=true)
+
+Gdy przetwarzanie kończy się wyświetlany jest napis, by sprawdzić pobrane pliki i plik .zip jest pobierany automatycznie:
+
+![143](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/143.png?raw=true)
+
+Przetwarzanie obrazów może się też nie powieść, wtedy wyświetlana jest wiadomość o zaistniałym błędzie.
+
+W pobranym zipie znajdują się dwa zdjęcia: oryginalne i miniaturka o wymiarach 128x128 pixeli:
+
+![144](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/144.png?raw=true)
+
+Przesłany obraz i otrzymany plik zip jest zapisywany również w folderze media/images
+
+![145](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/145.png?raw=true)
 
 
 

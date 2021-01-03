@@ -1,3 +1,4 @@
+<!--załadowanie szablonu widget_tweaks-->
 {% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
@@ -6,52 +7,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Thumbnailer</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <!--Bulma to darmowy framework CSS3 oparty o Flexbox, jest bardzo mały i lekki a zarazem posiada wiele różnych elementów-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <!--Vue to progresywna struktura do tworzenia interfejsów użytkownika-->
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <!--Axios byl juz na zajeciach, wiec jest dobrze znany-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  <!--Fontawasome to strona posiadająca ikony wektorowe-->
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 </head>
 <body>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        Thumbnailer
-      </a>
-    </div>
-  </nav>
-  <section class="hero is-primary is-fullheight-with-navbar">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title is-size-1 has-text-centered">Thumbnail Generator</h1>
-        <p class="subtitle has-text-centered" id="progress-title"></p>
-        <div class="columns is-centered">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #b3c7b8;">
+        <a class="navbar-brand" href="{% url 'home' %}">Thumbnailer</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Workers</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <br><br><br>
+      <div class="card text-center" style="margin: 0 auto; width: 60%;">
+        <div class="card-header" style="font-size: 150%;">
+          Thumbnail Generator
+        </div>
+        <div class="card-body">
+          <p class="card-text" id="progress-title" style="font-size: 120%"></p>
+          <br>
+          <div class="columns is-centered">
           <div class="column is-8">
             <form action="{% url 'home' %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="file is-large has-name">
                 <label class="file-label">
                   {{ form.image_file|add_class:"file-input" }}
-                  <span class="file-cta">
+                  <span class="file-cta btn btn-outline-secondary">
                     <span class="file-icon"><i class="fas fa-upload"></i></span>
-                    <span class="file-label">Browse image</span>
+                    <span class="file-label" style="font-size: 70%;">Browse image</span>
                   </span>
                   <span id="file-name" class="file-name" 
                     style="background-color: white; color: black; min-width: 450px;">
                   </span>
                 </label>
-                <input class="button is-link is-large" type="submit" value="Submit">
-              </div>
-              
+                <input class="is-link is-large btn btn-outline-secondary" type="submit" value="Submit">
+              </div>    
             </form>
           </div>
         </div>
-      </div>
+        </div>
     </div>
-  </section>
+<!--Skrypty z Bootsrapa-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  
   <script>
+  //odniesienie do pola wejściowego pliku
   var file = document.getElementById('{{form.image_file.id_for_label}}');
+  //na zdarzenie change wykonuje się funkcja
   file.onchange = function() {
+      //File umozliwia dostep do FileList zawierającej obiekty File reprezentujące
+      //pliki wybrane przez użytkownika
     if(file.files.length > 0) {
+        //dostep do pierwszego wybranego pliku za pomocą klasycznego selectora DOM
+        //dodawana jest nazwa wybranego pliku do interfejsu użytkownika
       document.getElementById('file-name').innerHTML = file.files[0].name;
     }
   };
@@ -59,36 +83,64 @@
 
   {% if task_id %}
   <script>
+    //utworzenie odpowiedniego adresu URL do sprawdzania statusu zadania
   var taskUrl = "{% url 'task' task_id=task_id %}";
   var dots = 1;
+  //pobranie elementu, w ktorym bedzie wyswietlany tekst dotyczący progresu
   var progressTitle = document.getElementById('progress-title');
+  //wywolanie funkcji aktualizującej powyższy element
   updateProgressTitle();
+  //setInterval wywoluje funkcje lub oblicza wyrazenie
+  //w okreslonych odstępach czasu
+  //w tym przypadku wykonywana będzie poniżej opisana funkcja co 800ms
   var timer = setInterval(function() {
+      //aktualizacja elementu wyswietlającego informację dotyczącą postepu
     updateProgressTitle();
+    //wykorzystanie axios'a do pobrania statusu zadania
     axios.get(taskUrl)
       .then(function(response){
         var taskStatus = response.data.task_status
+        //gdy mamy sukces następuje pobieranie
         if (taskStatus === 'SUCCESS') {
+            //wyczyszczenie timera i przekazanie wiadomości, ktora zostanie wyswietlona za 
+            //pomocą elementu o id='progress-title'
           clearTimer('Check downloads for results');
+          //window.location.protocol zwraca używany protokół sieciowy (http: lub https:)
+          //window.location.host zawiera część hosta adresu URL bieżącego dokumentu
           var url = window.location.protocol + '//' + window.location.host + response.data.results.archive_path;
+          //tworzony jest element a
           var a = document.createElement("a");
+          //target określa, gdzie otworzyć połączony dokument
+          //_BLANK otwiera połączony dokument w nowym oknie lub karcie
           a.target = '_BLANK';
+          //wstawienie a na koniec ciała dokumentu
           document.body.appendChild(a);
+          //a nie jest wyświetlane
           a.style = "display: none";
+          //określenie url strony, do której ma prowadzić łącze 
           a.href = url;
+          //określa, że cel (plik określony w atrybucie href) zostanie pobrany, gdy użytkownik kliknie hiperłącze
+          //results.zip to nazwa pliku
           a.download = 'results.zip';
+          //wywoływane jest kliknięcie na a
+          //element a sam się klika i następuje pobieranie
           a.click();
+          //usuwany jest element a z dokumentu
           document.body.removeChild(a);
+          //gry porażka to nic sie nie robi procz wyswietlenia napisu o 
+          //błędzie, dopoki nie zostanie wywolany nastepny interwał
         } else if (taskStatus === 'FAILURE') {
           clearTimer('An error occurred');
         }
       })
+      //jeśli error
       .catch(function(err){
         console.log('err', err);
         clearTimer('An error occurred');
       });
   }, 800);
 
+  //Funkcja, która wyświetla napis "processing images ..." i porusza kropkami
   function updateProgressTitle() {
     dots++;
     if (dots > 3) {
@@ -99,6 +151,9 @@
       progressTitle.innerHTML += '.';
     }
   }
+  //funkcja czyszcząca timer uruchomiony za pomocą setInterval()
+  //przyjmuje ona jeden argument message
+  //jest to wiadomosc o statusie zadania
   function clearTimer(message) {
     clearInterval(timer);
     progressTitle.innerHTML = message;
