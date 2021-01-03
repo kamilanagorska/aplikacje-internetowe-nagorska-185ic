@@ -10,7 +10,7 @@ Celery to pakiet oprogramowania do kolejkowania zadań oparty na języku Python,
 #### Spis treści:
 - [Redis - ćwiczenia](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#redis---zadania)
 - [Django + Redis + Celery](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#django--redis--celery)
-- [Praca z workerami w Celery](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#django--redis--celery)
+- [Praca z workerami w Celery](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7#praca-z-workerami-w-celery)
 
 
 #### Redis - zadania
