@@ -7,6 +7,8 @@ from django.shortcuts import render
 #potrzebne do klasy HomeView
 from django.views import View
 from .tasks import make_thumbnails
+from .tasks import div
+from django.views.generic import TemplateView
 
 #forma z jednym polem
 class FileUploadForm(forms.Form):
@@ -67,3 +69,19 @@ class TaskView(View):
             response_data['results'] = task.get()
 
         return JsonResponse(response_data)
+
+
+class WorkerView(TemplateView):
+    template_name = 'thumbnailer/workers.html'
+    
+def lets_calculate(request):
+    if request.method == "POST":
+        context = {}
+        x = float(request.POST.get('x'))
+        y = float(request.POST.get('y'))
+        task = div.delay(x,y)
+        context['task_id'] = task.id
+        context['task_status'] = task.status
+        return render(request, 'thumbnailer/results.html', {'x':x, 'y':y, 'context': context})
+    return render(request, 'thumbnailer/workers.html')
+
