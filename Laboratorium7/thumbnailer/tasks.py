@@ -11,8 +11,6 @@ from PIL import Image
 #django.conf.settings to klasa tworząca abstrakcję pojęć,
 #ustawień domyślnych i specyficznych dla serwisu
 from django.conf import settings
-#do zadania z limitem czasowym
-from celery.exceptions import SoftTimeLimitExceeded
 
 #shared_task to dekorator ktory umozliwia tworzenie zadan
 #bez koniecznosci posiadania konkretnej instancji aplikacji
@@ -93,8 +91,20 @@ def make_thumbnails(file_path, thumbnails=[]):
 
 @shared_task
 def div(x,y):
-    if x == 0:
-        err = "x can't be 0"
+    if y == 0:
+        err = "y can't be 0"
         return err
     else:
         return x/y
+
+@shared_task 
+def welcome():
+     print('Hello! I\'s periodic task!!')
+
+@shared_task
+def everyday():
+    print('Good afternoon! I hope you\'re having a great day!!')
+
+@shared_task
+def myexampletask():
+    print('Nice to see you')

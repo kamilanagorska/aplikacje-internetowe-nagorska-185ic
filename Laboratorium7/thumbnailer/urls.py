@@ -7,3 +7,4 @@ urlpatterns = [
   path('results/', views.lets_calculate, name='results'),
   path('task/<str:task_id>/', views.TaskView.as_view(), name='task'),
 ]
+

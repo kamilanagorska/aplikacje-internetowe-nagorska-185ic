@@ -671,13 +671,93 @@ Przesłany obraz, miniaturka i otrzymany plik zip jest zapisywany również w fo
 
 
 #### Praca z workerami w Celery
-...
 
+##### Przykład 1. - dzielenie
 
+![152](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/152.png?raw=true)
 
+Utworzyłam prostą podstronę umożliwiającą dzielenie na podstawie przykładu z tworzeniem miniaturki. Stworzyłam ścieżkę w urls.py dla tej strony i strony, która wyświetla wynik działania:
 
+![146](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/146.png?raw=true)
 
+Dodałam dwa nowe widoki WorkerView i lets_calculate. Pierwszy z nich odpowiada za wyświetlenie szablonu podstrony, gdzie podajemy liczby, które mają zostać uwzględnione w dzieleniu. Drugi z nich pobiera wpisane wartości licz i wykonuje task div. Pobierane są dwie informacje o tasku: id i status i zwracane wraz z x oraz y.
 
+![147](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/147.png?raw=true)
 
+Task div wygląda nastepująco: sprawdzane jest, czy y jest 0, bo jeśli tak to dzielenie nie może się odbyć. Jeśli jest inaczej wykonywane jest działanie x/y:
 
+![148](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/148.png?raw=true)
 
+Szablon workers.html, który umożliwia nam podanie dwóch liczb jest dość prosty. Znajduje się tutaj jedynie navbar, card z Bootstrapa i formularz z dwoma polami. Pokażę tylko fragment kodu z formularzem, bo reszta jest taka sama jak na każdej podstronie:
+
+![149](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/149.png?raw=true)
+
+Szablon results.html wyświetlający wynik dzielenia też jest prosty. Wyświetlam tu zmienne x oraz y. Dodatkowo znajdują się tutaj dwa puste elementy p. W jednym wyświetlany jest postęp, a w drugim wynik:
+
+![150](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/150.png?raw=true)
+
+Na końcu znajduje się skrypt, który wykonuje się jedynie, jeśli istnieje task_id:
+
+![151](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/151.png?raw=true)
+
+Działa on bardzo podobnie do tego z przykładu Thumbnailer. Jednak różnicą tutaj jest to, że jeśli status task'a jest równy SUCCESS to timer jest czyszczony i w elemencie p o id result wyświetlany jest wynik dzielenia. 
+
+Gdy wpiszemy dwie wartości w formularzu i następnie wciśniemy Calculate, przechodzimy do drugiej podstrony:
+
+![153](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/153.png?raw=true)
+
+Na postronie tej wyświetlane są liczby, które podaliśmy i napis "calculating..." z ruszającymi się kropkami (jednak nie zdążyłam zrobić screena tego napisu, za szybko znika). Po chwili wyświetla się napis Result: a poniżej wynik:
+
+![154](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/154.png?raw=true)
+
+##### Przykład 2. - taski okresowe
+
+Zainstalowałam Celery Beat, który łączy w sobie Celery (narzędzie do delegowania zadań) ze sprytnym harmonogramem o nazwie Beat.
+
+Utworzyłam dwa taski, które będę chciała wykonywać okresowo:
+
+![155](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/155.png?raw=true)
+
+Do istniejących już ustawień Celery musiałam dodać strefę czasową i harmonogram dla utworzonych zadań:
+
+![156](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/156.png?raw=true)
+
+Zadanie welcome będzie wykonywane co minutę, a task everyday codziennie o godzinie 12:30. Po odpaleniu projektu, serwera Redis i dwóch konsol z odpaloną aplikacją Celery. W pierwszej konsoli informujemy worker'a by czytał z "custom scheduler":
+
+![157](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/157.png?raw=true)
+
+W drugiej konsoli standardowo odpalany workera. Tam wyświetlane będą nasze taski. I tak co minutę wyświetlany w konsoli jest tekst "Hello! I's periodic task!!" (zjadłam t w słowie it's):
+
+![158](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/158.png?raw=true)
+
+A codziennie o godzinie 12:30 wyświetlany jest inny tekst:
+
+![159](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/159.png?raw=true)
+
+Po zainstalowaniu Celery Beat w panelu administratora Django pojawia się dział "Periodic Tasks":
+
+![160](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/160.png?raw=true)
+
+Można tu w prosty sposów definiować taski okresowe. W tym celu utworzyłam kolejny task:
+
+![166](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/166.png?raw=true)
+
+Teraz, gdy wejdziemy w Periodic tasks w panelu administratora i wybierzemy "Add periodic task" ukaże nam się formularz do zdefiniowania okresowego taska:
+
+![161](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/161.png?raw=true)
+
+Wpisuję nazwę zadania i wybieram zadanie z listy, można też wpisać samemu nazwę poniżej w Task (custom):
+
+![162](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/162.png?raw=true)
+
+Dodajemy Interval, czyli co ile nasze zadanie ma sie wykonywać. Wybrałam 10 sekund.
+
+![163](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/163.png?raw=true)
+
+Ustawiam jeszcze czas rozpoczęcia wykonywania zadania:
+
+![164](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/164.png?raw=true)
+
+Teraz po zrestartowaniu workera co 10 sekund wyświetla nam się napis:
+
+![165](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/165.png?raw=true)

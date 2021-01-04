@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from celery.schedules import crontab   
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     #będzie używana do kontrolowania renderowania danych wejściowych
     #formularza, aby umożliwić użytkownikom przesyłanie plików
     'widget_tweaks',
+    #do periodic tasks
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -162,3 +165,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 #string identyfikujący domyślną metodę serializacji do użycia
 #domyślnie jest to json
 CELERY_TASK_SERIALIZER = 'json'
+
+#Ustawienia potrzebne do tasków okresowych
+#strefa czasowa
+CELERY_TIMEZONE = 'Europe/Warsaw'
+CELERY_BEAT_SCHEDULE = {
+ 'send-every-minute': {
+       'task': 'thumbnailer.tasks.welcome',
+       'schedule': crontab()
+    }, 
+    'send-everyday-at-specific-time': {
+        'task': 'thumbnailer.tasks.everyday',
+        'schedule': crontab(minute=30, hour=12)
+    }
+}
