@@ -108,3 +108,8 @@ def everyday():
 @shared_task
 def myexampletask():
     print('Nice to see you')
+
+@shared_task
+def withargs(a,b,c):
+    s = a+b+c
+    print(s)

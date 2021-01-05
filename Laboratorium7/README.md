@@ -761,3 +761,17 @@ Ustawiam jeszcze czas rozpoczęcia wykonywania zadania:
 Teraz po zrestartowaniu workera co 10 sekund wyświetla nam się napis:
 
 ![165](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/165.png?raw=true)
+
+Do tasków okresowych można też oczywiście przekazywać argumenty. Trzeba wtedy w ustawieniach CELERY_BEAT_SCHEDULE załączyć 'args':
+
+![167](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/167.png?raw=true)
+
+![168](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/168.png?raw=true)
+
+I tak co 15 minut wykonywane jest zadanie liczące sumę 3 podanych liczb:
+
+![170](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/170.png?raw=true)
+
+W konsoli, w której powiadamialiśmy workera o czytaniu z 'custom scheduler' wyświetlane są powiadomienia o wysyłanych taskach w drugiej konsoli:
+
+![169](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium7/screenshots/169.png?raw=true)

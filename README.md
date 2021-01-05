@@ -19,6 +19,8 @@ Kontynuacja REST Framework i wykorzystanie Cookies [Laboratorium6](https://githu
 Web Scraping z wykorzystaniem Beautiful Soup, XPath i lxml [Laboratorium5](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium5)
 
 ### Laboratorium 7
+Aplikacja z wykorzystaniem Django + Celery + Redis [Laboratorium7](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7)
+
 ### Laboratorium 8
 ### Laboratorium 9
 ### Laboratorium 10

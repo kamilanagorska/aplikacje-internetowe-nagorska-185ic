@@ -177,5 +177,10 @@ CELERY_BEAT_SCHEDULE = {
     'send-everyday-at-specific-time': {
         'task': 'thumbnailer.tasks.everyday',
         'schedule': crontab(minute=30, hour=12)
-    }
+    },
+    'send-every-15-minutes':{
+        'task': 'thumbnailer.tasks.withargs',
+        'schedule': crontab(minute='*/15'),
+        'args': (20,200,2),
+    },
 }
