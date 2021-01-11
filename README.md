@@ -22,5 +22,9 @@ Web Scraping z wykorzystaniem Beautiful Soup, XPath i lxml [Laboratorium5](https
 Aplikacja z wykorzystaniem Django + Celery + Redis [Laboratorium7](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7)
 
 ### Laboratorium 8
+WKRÓTCE
+
 ### Laboratorium 9
+Django + React (aplikacja CRUD) [Laboratorium9](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium9)
+
 ### Laboratorium 10
