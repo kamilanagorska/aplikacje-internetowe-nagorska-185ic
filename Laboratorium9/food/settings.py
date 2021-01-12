@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = '=2ieq#v@ji9!=wj=1d1ffmn01cl0x589#(kvk!=%+%b83d-u2s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -160,11 +160,15 @@ STATIC_URL = '/static/'
 #My chcemy CORS tylko dla jednej konretnej domeny
 #dlatego ustawiamy False
 CORS_ORIGIN_ALLOW_ALL = False
+#CORS_ALLOW_ALL_ORIGINS = False
 #A tutaj definiujemy adres url tej domeny, dla której chcemy
 #włączyć CORS
 #Jest to lista źródeł, które są upoważnione do wysyłania
 #żądań HTTP między wirtynami
 #Domyślnie []
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8081',
+    'http://localhost:8001',
 )
+#COST_ALLOWED_ORIGINS = [
+    #'http://localhost:8081',
+#]

@@ -11,5 +11,5 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'food',
                   'description',
-                  'score'
+                  'score',
                   'published')

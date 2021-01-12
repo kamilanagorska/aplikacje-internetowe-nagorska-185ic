@@ -11,3 +11,6 @@ class Review(models.Model):
     score = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
     #czy opublikowana czy nie
     published = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.food

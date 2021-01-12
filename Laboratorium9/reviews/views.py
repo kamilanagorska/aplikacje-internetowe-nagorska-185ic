@@ -68,5 +68,5 @@ def review_list_published(request):
     reviews = Review.objects.filter(published=True)
         
     if request.method == 'GET': 
-        reviews_serializer = ReviewSerializer(tutorials, many=True)
+        reviews_serializer = ReviewSerializer(reviews, many=True)
         return JsonResponse(reviews_serializer.data, safe=False)
