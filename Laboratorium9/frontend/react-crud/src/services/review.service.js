@@ -26,7 +26,7 @@ class ReviewDataService {
   }
 
   findByFood(food) {
-    return http.get(`/reviews?title=${food}`);
+    return http.get(`/reviews?food=${food}`);
   }
 }
 

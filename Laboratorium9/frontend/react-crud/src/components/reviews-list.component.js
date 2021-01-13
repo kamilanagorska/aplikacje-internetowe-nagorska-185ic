@@ -75,7 +75,7 @@ export default class ReviewsList extends Component {
     ReviewDataService.findByFood(this.state.searchFood)
       .then(response => {
         this.setState({
-          tutorials: response.data
+          reviews: response.data
         });
         console.log(response.data);
       })
@@ -88,9 +88,8 @@ export default class ReviewsList extends Component {
     const { searchFood, reviews, currentReview, currentIndex } = this.state;
 
     return (
-      <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
+      <div className="font2">
+          <div className="input-group" style={{width:'70%', paddingTop: '20px', margin: '0 auto', paddingBottom: '20px'}}>
             <input
               type="text"
               className="form-control"
@@ -107,21 +106,61 @@ export default class ReviewsList extends Component {
                 Search
               </button>
             </div>
-          </div>
         </div>
-        <div className="col-md-6">
-          <h4>Reviews List</h4>
+        <div className="card" style={{width:'65%', margin:'0 auto', backgroundColor: '#f0f0f5'}}>
+        <div>
+          <p className="font text-center" style={{fontSize: '50px'}}>Reviews List</p>
+          <p className="text-center">Click on review to see details</p>
 
-          <ul className="list-group">
+          <div>
+          {currentReview ? (
+            <div className="card" style={{padding: '20px', width: '80%', margin:'0 auto'}}>
+              <p className="font" style={{fontSize: '30px'}}>{currentReview.food}</p>
+              <div>
+                <label>
+                  <strong>description:</strong>
+                </label>{" "}
+                {currentReview.description}
+              </div>
+              <div>
+                <label>
+                  <strong>score:</strong>
+                </label>{" "}
+                {currentReview.score}
+              </div>
+              <div>
+                <label>
+                  <strong>status:</strong>
+                </label>{" "}
+                {currentReview.published ? "published" : "pending"}
+              </div>
+
+              <Link
+                to={"/reviews/" + currentReview.id}
+                className="badge badge-secondary"
+                style={{width:'20%'}}
+              >
+                Edit
+              </Link>
+            </div>
+
+          ) : (
+            <div>
+            </div>
+          )}
+        </div>
+
+          <ul className="list-group" style={{paddingTop: '15px'}}>
             {reviews &&
               reviews.map((review, index) => (
                 <li
                   className={
-                    "list-group-item " +
+                    "list-group-item list-group-item-action list-group-item-light " +
                     (index === currentIndex ? "active" : "")
                   }
                   onClick={() => this.setActiveReview(review, index)}
                   key={index}
+                  style={{width:'70%', margin: '0 auto'}}
                 >
                   {review.food}
                 </li>
@@ -129,54 +168,14 @@ export default class ReviewsList extends Component {
           </ul>
 
           <button
-            className="m-3 btn btn-sm btn-danger"
+            className="btn btn-outline-secondary"
             onClick={this.removeAllReviews}
+            style={{marginLeft: '45%', marginTop:'15px', marginBottom: '30px'}}
           >
             Remove All
           </button>
         </div>
-        <div className="col-md-6">
-          {currentReview ? (
-            <div>
-              <h4>Review</h4>
-              <div>
-                <label>
-                  <strong>Food:</strong>
-                </label>{" "}
-                {currentReview.food}
-              </div>
-              <div>
-                <label>
-                  <strong>Description:</strong>
-                </label>{" "}
-                {currentReview.description}
-              </div>
-              <div>
-                <label>
-                  <strong>Score:</strong>
-                </label>{" "}
-                {currentReview.score}
-              </div>
-              <div>
-                <label>
-                  <strong>Status:</strong>
-                </label>{" "}
-                {currentReview.published ? "Published" : "Pending"}
-              </div>
 
-              <Link
-                to={"/reviews/" + currentReview.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Review...</p>
-            </div>
-          )}
         </div>
       </div>
     );

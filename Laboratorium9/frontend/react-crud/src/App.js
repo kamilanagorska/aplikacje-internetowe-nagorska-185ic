@@ -12,25 +12,25 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/reviews" className="navbar-brand">
-            bezKoder
+        <nav className="navbar navbar-expand navbar-light" style={{backgroundColor: '#b3b3cc'}}>
+          <a href="/" className="navbar-brand font" style={{fontWeight: 'bold'}}>
+            Food Reviewer
           </a>
-          <div className="navbar-nav mr-auto">
+          <div className="navbar-nav mr-auto font2">
             <li className="nav-item">
               <Link to={"/reviews"} className="nav-link">
-                Reviews
+                all reviews
               </Link>
             </li>
             <li className="nav-item">
               <Link to={"/add"} className="nav-link">
-                Add
+                add new review
               </Link>
             </li>
           </div>
         </nav>
 
-        <div className="container mt-3">
+        <div>
           <Switch>
             <Route exact path={["/", "/reviews"]} component={ReviewsList} />
             <Route exact path="/add" component={AddReview} />

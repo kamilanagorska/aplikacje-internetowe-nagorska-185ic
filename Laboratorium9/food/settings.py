@@ -167,7 +167,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 #żądań HTTP między wirtynami
 #Domyślnie []
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8001',
+    'http://localhost:3000',
 )
 #COST_ALLOWED_ORIGINS = [
     #'http://localhost:8081',

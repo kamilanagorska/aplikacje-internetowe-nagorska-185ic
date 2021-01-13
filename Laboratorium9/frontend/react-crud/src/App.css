@@ -1,15 +1,9 @@
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-}
+@import url('https://fonts.googleapis.com/css?family=Liu%20Jian%20Mao%20Cao');
+@import url('https://fonts.googleapis.com/css?family=Mallanna');
 
-.submit-form {
-  max-width: 300px;
-  margin: auto;
+.font {
+  font-family: 'Liu Jian Mao Cao';
 }
-
-.edit-form {
-  max-width: 300px;
-  margin: auto;
+.font2{
+  font-family: 'Mallanna';
 }

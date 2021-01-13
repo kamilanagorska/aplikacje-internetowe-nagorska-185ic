@@ -131,13 +131,13 @@ export default class Review extends Component {
     const { currentReview } = this.state;
 
     return (
-      <div>
+      <div className="font2">
         {currentReview ? (
-          <div className="edit-form">
-            <h4>Review</h4>
-            <form>
+          <div className="card" style={{width:'65%', margin:'0 auto', backgroundColor: '#f0f0f5', marginTop: '20px'}}>
+            <p className="font text-center" style={{fontSize: '50px'}}>Review</p>
+            <form style={{margin: '0 auto', width:'70%'}}>
               <div className="form-group">
-                <label htmlFor="food">Food</label>
+                <label htmlFor="food">name of food:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -147,7 +147,7 @@ export default class Review extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">description:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -157,7 +157,7 @@ export default class Review extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="score">Score</label>
+                <label htmlFor="score">score (0-10):</label>
                 <input
                   type="number"
                   className="form-control"
@@ -169,48 +169,50 @@ export default class Review extends Component {
 
               <div className="form-group">
                 <label>
-                  <strong>Status:</strong>
+                  <strong>status: </strong>
                 </label>
-                {currentReview.published ? "Published" : "Pending"}
+                {currentReview.published ? " published" : " pending"}
               </div>
             </form>
 
             {currentReview.published ? (
               <button
-                className="badge badge-primary mr-2"
+                className="btn btn-outline-secondary"
                 onClick={() => this.updatePublished(false)}
+                style={{margin: '0 auto', width:'20%', marginBottom:'10px'}}
               >
                 UnPublish
               </button>
             ) : (
               <button
-                className="badge badge-primary mr-2"
+                className="btn btn-outline-secondary"
                 onClick={() => this.updatePublished(true)}
+                style={{margin: '0 auto', width:'20%', marginBottom:'10px'}}
               >
                 Publish
               </button>
             )}
 
             <button
-              className="badge badge-danger mr-2"
+              className="btn btn-outline-secondary"
               onClick={this.deleteReview}
+              style={{margin: '0 auto', width:'20%', marginBottom:'10px'}}
             >
               Delete
             </button>
 
             <button
               type="submit"
-              className="badge badge-success"
+              className="btn btn-outline-secondary"
               onClick={this.updateReview}
+              style={{margin: '0 auto', width:'20%', marginBottom:'10px'}}
             >
               Update
             </button>
-            <p>{this.state.message}</p>
+            <p className="text-center" style={{fontSize:'25px'}}>{this.state.message}</p>
           </div>
         ) : (
           <div>
-            <br />
-            <p>Please click on a Review...</p>
           </div>
         )}
       </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReviewDataService from "../services/review.service";
+import { Link } from "react-router-dom";
 
 export default class AddReview extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class AddReview extends Component {
       description: "", 
       score: 0,
       published: false,
+
       submitted: false
     };
   }
@@ -42,7 +44,7 @@ export default class AddReview extends Component {
     var data = {
       food: this.state.food,
       description: this.state.description,
-      score: this.state.description
+      score: this.state.score
     };
 
     ReviewDataService.create(data)
@@ -75,18 +77,26 @@ export default class AddReview extends Component {
 
   render() {
     return (
-        <div className="submit-form">
+        <div  className="card font2" style={{width:'65%', margin:'0 auto', backgroundColor: '#f0f0f5', marginTop:'20px'}}>
           {this.state.submitted ? (
             <div>
-              <h4>You submitted successfully!</h4>
-              <button className="btn btn-success" onClick={this.newReview}>
-                Add
+              <p className="text-center font2" style={{fontSize:'25px', paddingTop: '10px'}}>You submitted successfully!</p>
+              <button className="btn btn-outline-secondary" onClick={this.newReview} style={{width:'20%', marginBottom:'30px', marginTop:'20px', marginLeft:'40%'}}>
+                Add more
               </button>
+              <Link
+                to={"/reviews"}
+                className="btn btn-outline-secondary"
+                style={{width:'20%', marginBottom:'30px', marginTop:'10px', marginLeft:'40%'}}
+              >
+                All reviews
+              </Link>
             </div>
           ) : (
             <div>
-              <div className="form-group">
-                <label htmlFor="food">Food</label>
+              <p className="font text-center" style={{fontSize: '50px'}}>Add review</p>
+              <div className="form-group" style={{margin: '0 auto', width:'70%'}}>
+                <label htmlFor="food">name of food:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -98,8 +108,8 @@ export default class AddReview extends Component {
                 />
               </div>
   
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
+              <div className="form-group" style={{margin: '0 auto', width:'70%'}}>
+                <label htmlFor="description">description:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -111,8 +121,8 @@ export default class AddReview extends Component {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="score">Score</label>
+              <div className="form-group" style={{margin: '0 auto', width:'70%'}}>
+                <label htmlFor="score">score (0-10):</label>
                 <input
                   type="number"
                   className="form-control"
@@ -124,7 +134,7 @@ export default class AddReview extends Component {
                 />
               </div>
   
-              <button onClick={this.saveReview} className="btn btn-success">
+              <button onClick={this.saveReview} className="btn btn-outline-secondary" style={{width:'20%', marginBottom:'30px', marginTop:'20px', marginLeft:'40%'}}>
                 Submit
               </button>
             </div>
