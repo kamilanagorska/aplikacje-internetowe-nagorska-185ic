@@ -12,4 +12,4 @@ class ReviewSerializer(serializers.ModelSerializer):
                   'food',
                   'description',
                   'score',
-                  'published')
+                  'published') 

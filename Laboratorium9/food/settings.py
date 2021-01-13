@@ -160,7 +160,6 @@ STATIC_URL = '/static/'
 #My chcemy CORS tylko dla jednej konretnej domeny
 #dlatego ustawiamy False
 CORS_ORIGIN_ALLOW_ALL = False
-#CORS_ALLOW_ALL_ORIGINS = False
 #A tutaj definiujemy adres url tej domeny, dla której chcemy
 #włączyć CORS
 #Jest to lista źródeł, które są upoważnione do wysyłania
@@ -169,6 +168,3 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 )
-#COST_ALLOWED_ORIGINS = [
-    #'http://localhost:8081',
-#]
