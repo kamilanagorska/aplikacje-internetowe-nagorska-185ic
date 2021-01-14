@@ -9,7 +9,7 @@ Utworzyłam aplikację z recenzjami jedzenia. Jest to aplikacja CRUD (Create Rea
 - Backend - Django [TUTAJ](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium9#backend----django)
 - Backend - działanie [TUTAJ](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium9#dzia%C5%82anie-backendu)
 - Frontend - React.js [TUTAJ](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium9#frontend-reactjs)
-- Frontend - działanie [TUTAJ]()
+- Frontend - działanie [TUTAJ](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium9#dzia%C5%82anie-frontendu)
 
 #### Backend -  Django
 Do utworzenia tego projektu potrzebne były dwa pakiety: djangorestframework i django-cors-headers. Pierwszy z nich już był używany w ramach zajęć, drugi nie.
@@ -48,7 +48,8 @@ Oczywiście w urls całego projektu musiałam umieścić odwołanie do tras apli
 Następnie zdefiniować trzeba było widoki:
 - review_list()
 - review_detail()
-review_list_published() nie jest używany, dlatego zakomentowałam go.
+
+review_list_published() nie jest używany, dlatego zakomentowałam go (ale później i tak pokażę jak działa)
 
 Pierwszy widok review_list pobiera listę recenzji, jeśli żądanie to GET. Umieszczona jest tam też implementacja wyszukiwania recenzji po nazwie jedzenia. Wystarczy wpisać kawałek nazwy, np. zamiast cake wystarczy c i znalezione zostaną wszystkie recenzje zawierające tą literę.
 
@@ -78,7 +79,7 @@ Jeśli żadanie to GET to zwracane zostają detale dotyczące wybranej recenzji.
 
 ![14](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/14.png?raw=true)
 
-Zakomentowany przeze mnie widok wyszukuje obiekty Review o wartości published równiej True i zwraca je, gdy żądanie jest równe GET.
+Zakomentowany przeze mnie widok wyszukuje obiekty Review o wartości published równej True i zwraca je, gdy żądanie jest równe GET.
 
 ![15](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/15.png?raw=true)
 
@@ -159,7 +160,7 @@ W render() umieszczone są wszystkie wyświetlane elementy na stronie. Formularz
 
 ![32](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/32.png?raw=true)
 
-Jeśli aktualnie wybrana recenzja istnieje to są wyświetlane jej szczegóły. Pod szczegółami znajduje się znaczek Edit, którego kliknięcie przekierowyje nas na podstronę z wybraną recenzją. Jeśli nie ma żadnej wybranej recenzji, nic nie jest wyświetlane.
+Jeśli aktualnie wybrana recenzja istnieje to są wyświetlane jej szczegóły. Pod szczegółami znajduje się znaczek Edit, którego kliknięcie przekierowuje nas na podstronę z wybraną recenzją.
 
 ![33](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/33.png?raw=true)
 
@@ -167,7 +168,7 @@ Wyświetlana jest lista wszystkich recenzji:
 
 ![34](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/34.png?raw=true)
 
-Na samym dole znajduje się guzik umożliwiający usunięcie wszyskich recenzji.
+Na samym dole znajduje się guzik umożliwiający usunięcie wszystkich recenzji.
 
 ![35](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/35.png?raw=true)
 
@@ -181,7 +182,7 @@ Zdefiniowane metody:
 
 ![37](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/37.png?raw=true)
 
-- onChangeFood(e), onChanfeDescription(e), onChangeScore(e) - wszystkie działają tak samo, ale dotyczą innej wartości recenzji. Wykonywane są, gdy zmieniana jest wartość w odpowiednim formularzy (np. dla pierwszej z nich jest to formularz, gdzie możemy wpisywać nazwę recenzowanego jedzenia). Wartość z formularza jest pobierana, następnie bieżący stan zastępujemy parametrami ostatniego stanu prevState, czyli pod currentReview podstawiamy wartość z poprzedniego stanu, prócz jednej wartości, np. food dla onChangeFood, score dla onChangeScore. Pod tą wartość podstawiamy tą pobraną z formularza:
+- onChangeFood(e), onChanfeDescription(e), onChangeScore(e) - wszystkie działają tak samo, ale dotyczą innej wartości recenzji. Wykonywane są, gdy zmieniana jest wartość w odpowiednim polu formularza (np. dla pierwszej z nich jest to pole, gdzie możemy wpisywać nazwę recenzowanego jedzenia). Wartość z formularza jest pobierana, następnie bieżący stan zastępujemy parametrami ostatniego stanu prevState, czyli pod currentReview podstawiamy wartość z poprzedniego stanu, a jedną wartość zmieniamy, np. food dla onChangeFood, score dla onChangeScore. Pod tą wartość podstawiamy tą pobraną z formularza:
 
 ![38](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/38.png?raw=true)
 
@@ -234,15 +235,15 @@ Poniżej zdefiniowane metody:
 
 ![49](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/49.png?raw=true)
 
-- saveReview() - tworzy nową recenzję i zmienia jej status submitted na true:
+- saveReview() - tworzy nową recenzję i zmienias wartość stanu - submitted na true, co powoduje ponownie wykonanie render() i zmienienie tego, co jest wyświetlane na stronie:
 
 ![50](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/50.png?raw=true)
 
-- newReview() - wykonywana po wciśnięciu guzika Add more, który wyświetla się po utworzeniu już nowej recenzji, ustawia wartości w stanie na te początkowe
+- newReview() - wykonywana po wciśnięciu guzika Add more, który wyświetla się po utworzeniu już nowej recenzji, ustawia wartości w stanie na te początkowe, "czyści" stan przed utworzeniem nowej recenzji:
 
 ![51](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/51.png?raw=true)
 
-W render() to co, jest wyświetlane na stronie. Jeśli utworzona już została nowa recenzja wyświetlany jest komunikat o udanym utworzeniu i guzik Add more umożliwiający ponowne utworzenie nowej recenzji. Dodałam tutaj też guzik All reviews, który powoduje przejście do podstrony z listą wszystkich recenzji.
+W render() znajduje się to, co jest wyświetlane na stronie. Jeśli utworzona już została nowa recenzja wyświetlany jest komunikat o udanym utworzeniu i guzik Add more umożliwiający ponowne utworzenie nowej recenzji. Dodałam tutaj też guzik All reviews, który powoduje przejście do podstrony z listą wszystkich recenzji, bo jest to wygodniejsze niż wciskanie za każdym razem navbara, gdy po utworzeniu recenzji chcemy zobaczyć ją na liście.
 
 ![52](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/52.png?raw=true)
 
@@ -283,7 +284,7 @@ W konsoli jest wyświetlana wybrana recenzja:
 
 ![62](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/62.png?raw=true)
 
-Zmienienie statusu recenzji klikając UnPublish:
+Zmienienie statusu recenzji published na pending klikając UnPublish:
 
 ![63](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/63.png?raw=true)
 
@@ -301,9 +302,11 @@ Po kliknięciu Update:
 
 ![67](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/67.png?raw=true)
 
-Usunięcie recenzji poprzez naciśnięcie guzika Delete:
+Usunięcie recenzji poprzez naciśnięcie guzika Delete. Zostajemy przekierowani do listy wszyskich recenzji, gdzie już nie ma tej usuniętej:
 
 ![68](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/68.png?raw=true)
+
+W konsoli znajduje się nowa tablica recenzji, bez tej usuniętej:
 
 ![69](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/69.png?raw=true)
 
@@ -325,16 +328,18 @@ Dodanie nowej recenzji z poprawną oceną:
 
 ![75](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/75.png?raw=true)
 
-Po wciśnięciu Add more:
+Po wciśnięciu Add more możemy dodać nową recenzję:
 
 ![76](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/76.png?raw=true)
 
-Po wciśnięciu All reviews:
+Dodałam nową recenzję i wcisnęłam tym razem guzik All reviews, co spowodowało przejście do listy z recenzjami. Znajdują się tutaj też te nowo utworzone recenzje:
 
 ![77](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/77.png?raw=true)
 
 Wciśnięcie Remove All powoduje usunięcie wszystkich recenzji:
 
 ![78](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/78.png?raw=true)
+
+W konsoli wyświetlana jest pusta tablica, jako że wszystko recenzje zostały usunięte:
 
 ![79](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/79.png?raw=true)
