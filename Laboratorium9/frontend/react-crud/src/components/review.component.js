@@ -23,7 +23,7 @@ export default class Review extends Component {
       //aktualnie wybrana recenzja
       currentReview: {
         id: null,
-        title: "",
+        food: "",
         description: "",
         score: 0,
         published: false
@@ -110,7 +110,7 @@ export default class Review extends Component {
   updatePublished(status) {
     var data = {
       id: this.state.currentReview.id,
-      title: this.state.currentReview.food,
+      food: this.state.currentReview.food,
       description: this.state.currentReview.description,
       score: this.state.currentReview.score,
       published: status
@@ -191,7 +191,7 @@ export default class Review extends Component {
                   type="text"
                   className="form-control"
                   id="food"
-                  value={currentReview.tfood}
+                  value={currentReview.food}
                   onChange={this.onChangeFood}
                 />
               </div>

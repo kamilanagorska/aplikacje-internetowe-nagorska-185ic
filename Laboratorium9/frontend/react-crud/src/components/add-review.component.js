@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 export default class AddReview extends Component {
   constructor(props) {
     super(props);
+    //zmiany wartosci w formularzu
     this.onChangeFood = this.onChangeFood.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeScore = this.onChangeScore.bind(this);
+    //zapisanie nowej recenzji
     this.saveReview = this.saveReview.bind(this);
+    //zmiana stanu na początkowy
     this.newReview = this.newReview.bind(this);
 
     this.state = {
@@ -17,36 +20,50 @@ export default class AddReview extends Component {
       description: "", 
       score: 0,
       published: false,
-
+      //false gdy nie zapiszemy naszej nowej recenzji
+      //po zmianie statusu na true wyswietla sie co innego na stronie
       submitted: false
     };
   }
 
+  //gdy zmienia sie wartosc w formularzu
+  //zapisuja wartosc z formularza
+  //zmieniają stan
   onChangeFood(e) {
     this.setState({
       food: e.target.value
     });
   }
-
   onChangeDescription(e) {
     this.setState({
       description: e.target.value
     });
   }
-
   onChangeScore(e) {
       this.setState({
           score: e.target.value
       });
   }
 
+  //tworzenie nowej recenzji
+  //zapisywanie jej
   saveReview() {
+    //utworzenie obiektu o wartosciach
+    //zapisanych w stanie
+    //food, description,score
     var data = {
       food: this.state.food,
       description: this.state.description,
       score: this.state.score
     };
 
+    //wykorzystanie metody create z pliku
+    //review.service.js
+    //zmieniany jest stan
+    //podstawiane są wartosci nowej recenzji
+    //submitted zmienia sie na true, co powoduje zmienienie
+    //wyswietlanych rzeczy na stronie
+    //w konsoli wyswietlana jest nowa recenzja
     ReviewDataService.create(data)
       .then(response => {
         this.setState({
@@ -64,6 +81,11 @@ export default class AddReview extends Component {
       });
   }
 
+  //wykonywana po wcisnieciu guzika add more
+  //"czyszczenie" stanu, by moc utworzyc nową recenzje
+  //stan musi byc do tego czysty, czyli musi miec
+  //wartosci takie, jakie mial na samym poczatku
+  //przed stworzeniem nowej recenzji
   newReview() {
     this.setState({
       id: null,
