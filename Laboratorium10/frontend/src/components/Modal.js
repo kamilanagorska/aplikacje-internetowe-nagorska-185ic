@@ -29,8 +29,8 @@ import React, { Component } from "react";
       render() {
         const { toggle, onSave } = this.props;
         return (
-          <Modal isOpen={true} toggle={toggle}>
-            <ModalHeader toggle={toggle}> Todo Item </ModalHeader>
+          <Modal isOpen={true} toggle={toggle} className="font2">
+            <ModalHeader toggle={toggle} className="font"> Thing to do </ModalHeader>
             <ModalBody>
               <Form>
                 <FormGroup>
@@ -40,7 +40,6 @@ import React, { Component } from "react";
                     name="title"
                     value={this.state.activeItem.title}
                     onChange={this.handleChange}
-                    placeholder="Enter Todo Title"
                   />
                 </FormGroup>
                 <FormGroup>
@@ -50,7 +49,6 @@ import React, { Component } from "react";
                     name="subject"
                     value={this.state.activeItem.subject}
                     onChange={this.handleChange}
-                    placeholder="Enter Todo Subject"
                   />
                 </FormGroup>
                 <FormGroup>
@@ -60,7 +58,6 @@ import React, { Component } from "react";
                     name="description"
                     value={this.state.activeItem.description}
                     onChange={this.handleChange}
-                    placeholder="Enter Todo description"
                   />
                 </FormGroup>
                 <FormGroup>
@@ -70,7 +67,6 @@ import React, { Component } from "react";
                     name="date"
                     value={this.state.activeItem.date}
                     onChange={this.handleChange}
-                    placeholder="Enter Todo Date"
                   />
                 </FormGroup>
                 <FormGroup check>
@@ -87,7 +83,7 @@ import React, { Component } from "react";
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="success" onClick={() => onSave(this.state.activeItem)}>
+              <Button outline color="info" onClick={() => onSave(this.state.activeItem)}>
                 Save
               </Button>
             </ModalFooter>
