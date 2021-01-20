@@ -130,12 +130,43 @@ import { ListGroup, ListGroupItem, Badge, FormText } from 'reactstrap';
         if (m < 10){
           m = `0${m}`;
         }
+        let n= "";
         const y = today.getFullYear();
         const dateToCheck = itemDate.split("-");
-        if (y < dateToCheck[0] || m < dateToCheck[1] || d < dateToCheck[2]){
-          return false;
+        if(d<10){
+          n = d.toString();
+          n = `0${n}`;
         } else {
+          n = d.toString();
+        }
+        if (y.toString() > dateToCheck[0] || m > dateToCheck[1] || n > dateToCheck[2]){
           return true;
+        } else {
+          return false;
+        }
+      }
+
+      checkTom = item => {
+        const itemDate = item.date;
+        const today = new Date();
+        const d = today.getDate();
+        let m = today.getMonth() +1;
+        if (m < 10){
+          m = `0${m}`;
+        }
+        let n = "";
+        const y = today.getFullYear();
+        const dateToCheck = itemDate.split("-");
+        if(d<10){
+          n = (d+1).toString();
+          n = `0${n}`;
+        } else {
+          n = (d+1).toString();
+        }
+        if (y.toString() === dateToCheck[0] && m === dateToCheck[1] && n === dateToCheck[2]){
+          return true;
+        } else {
+          return false;
         }
       }
       renderItems = () => {
@@ -157,7 +188,8 @@ import { ListGroup, ListGroupItem, Badge, FormText } from 'reactstrap';
               </FormText>
               {this.checkTodayDate(item) ? 
               (<Badge color="danger">today</Badge>) 
-              : this.checkPast(item) ? <Badge color="warning">too late</Badge>
+              : this.checkPast(item) ? <Badge color="dark">too late</Badge>
+              : this.checkTom(item) ? <Badge color="warning">tomorrow</Badge>
               : <Badge color="light">{item.date}</Badge>
               }
             </span>
