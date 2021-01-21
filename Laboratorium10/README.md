@@ -24,7 +24,7 @@ Umieściłam w ustawieniach również ustawienia CORS, czyli wyłączyłam go dl
 
 ![3](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium10/screenshots/3.png?raw=true)
 
-Utworzyłam serializer, który będzie zarzadzać serializacją i deserializacją z formatu JSON. Wybrałam pola, które mają zostać uwzględnione (wszystkie).
+Utworzyłam serializer, który będzie zarządzać serializacją i deserializacją z formatu JSON. Wybrałam pola, które mają zostać uwzględnione (wszystkie).
 
 ![4](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium10/screenshots/4.png?raw=true)
 
@@ -48,7 +48,7 @@ Mogę tutaj odczytywać zaplanowane zdarzenia (Read) oraz dodawać nowe (Create)
 
 Utworzę nowy obiekt Plan, by pokazać, że tworzenie działa:
 
-![9](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium9/screenshots/9.png?raw=true)
+![9](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium10/screenshots/9.png?raw=true)
 
 Po wciśnięciu POST, gdy zobaczymy teraz listę wszystkich planów ukazuje nam się (na samym końcu) plan utworzony przed chwilą:
 
