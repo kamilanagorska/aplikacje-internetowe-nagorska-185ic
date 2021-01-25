@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>FunChat</title>
+  <link rel="stylesheet" href="style.css">
+  <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+</head>
+<body>
+  <ul class="pages">
+    <li class="login page">
+                <div class="form">
+                    <p style="font-size: 60px; font-weight: bold;">Welcome to FunChat!</p>
+                    <p style="font-size: 20px;">We hope you will spend here some good time. Please, remember about being nice to others.</p>
+                    <p class="title" style="font-weight: bold;">username:</p>
+                    <input style="width: 40%" class="usernameInput" type="text" maxlength="14"/>
+                  </div>
+
+    </li>
+    <li class="chat page">
+      <div class="chatArear">
+        <ul id="messages" class="messages"></ul>
+      </div>
+      <input class="inputMessage" placeholder="Type here..."/>
+    </li>
+  </ul>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scripts.js"></script>
+</body>
+</html>
