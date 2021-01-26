@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Workers</title>
+  <link href='https://fonts.googleapis.com/css?family=Advent%20Pro' rel='stylesheet'>
+</head>
+<body  style="font-family: Advent Pro;">
+    <p style="font-size: 30px">Web Workers - przykłady</p>
+    <p style="font-size: 20px">1. Generator wyrazów ciągu Fibonacciego:</p>
+    <form>
+        <label>Wprowadź liczbę nieujemną, całkowitą n:</label><br><br>
+        <img style="width:200px" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5662c603b1cc30912599180f12fe0d29701c1448" alt="wzor"><br><br>
+        <input type="number" id="n" required></input>
+    </form><br>
+    <button onclick="startFirstWorker()">Oblicz</button> 
+    <p>Wyrazy ciągu (od F0 do Fn): <output id="result"></output></p>
+    <br><br><br>
+    <p style="font-size: 20px">1. NWD - Algorytm Euklidesa:</p>
+    <form>
+        <label>Wprowadź pierwszą liczbę:</label><br>
+        <input type="number" id="a" required></input><br><br>
+        <label>Wprowadź drugą liczbę:</label><br>
+        <input type="number" id="b" required></input>
+    </form><br>
+    <button onclick="startSecondWorker()">Oblicz</button> 
+    <p>Największy wspólny dzielnik: <output id="result2"></output></p>
+
+
+    <script scr="/fibonacci.js"></script>
+    <script>
+        function startFirstWorker() {
+            var w;
+            var n = document.getElementById("n").value;
+            //sprawdzenie czy przeglądarka wspiera Web Worker'y
+          if(typeof(Worker) !== "undefined") {
+              //utworzenie Workera, wykona on to co w pliku fibonacci.js
+              w = new Worker("fibonacci.js");
+              //przesładnie danych do Workera
+              w.postMessage(n);
+              //onmessage reprezentuje EventHandler, czyli funkcje, ktora ma byc wywołana
+              //gdy wystapi zdarzenie komunikatu
+              w.onmessage = function(event) {
+              document.getElementById("result").innerHTML = event.data;
+            };
+          } 
+          //jeśli nie wspiera to wypisuje informację taką:
+          else {
+            document.getElementById("result").innerHTML = "Przykro mi, ale Twoja przeglądarka nie wspiera Web Worker'ów...";
+          }
+        }
+
+        function startSecondWorker() {
+            var w;
+            var a = document.getElementById("a").value;
+            var b = document.getElementById("b").value;
+            if(typeof(Worker) !== "undefined"){
+                w = new Worker("nwd.js");
+                w.postMessage({
+                    a: a,
+                    b: b,
+                });
+                w.onmessage = function(event) {
+                    document.getElementById("result2").innerHTML = event.data;
+                }
+            } else {
+                document.getElementById("result2").innerHTML = event.data;
+            }
+        }
+        
+        </script>
+
+</body>
+</html>

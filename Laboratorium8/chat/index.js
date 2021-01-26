@@ -35,67 +35,6 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
   });
 
-http.listen(3000, () => {
-    console.log('listening on *:3000');
-  });
-
-let users = 0;
-
-io.on('connection', (socket) => {
-    let addUser = false;
-
-    //tworzenie wiadomości
-    socket.on('new message', (data) => {
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
-  });
-  
-  //tworzenie nowego użytkownika
-  socket.on('add user', (username) => {
-    if (addUser) return;
-
-    socket.username = username;
-    ++users;
-    addUser = true;
-    socket.emit('login', {
-      users: users
-    });
-    socket.broadcast.emit('user joined', {
-      username: socket.username,
-      users: users
-    });
-  });
-
-  //dodanie napisu "typing"
-  socket.on('typing', () => {
-    socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
-
-  //usunięcie napisuje "typing"
-  socket.on('stop typing', () => {
-    socket.broadcast.emit('stop typing', {
-      username: socket.username
-    });
-  });
-
-  //kiedy uzytkownik wyloguje się
-  socket.on('disconnect', () => {
-    if (addUser) {
-      --users;
-
-      // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        users: users
-      });
-    }
-  });
-
-
 //wyświetlanie, czy użytkownik dołączył lub wyszedl z czatu
 //w konsoli
 io.on('connection', (socket) => {
