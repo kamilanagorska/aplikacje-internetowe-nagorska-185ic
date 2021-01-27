@@ -13,7 +13,7 @@ Moje modyfikacje:
 - wyświetlanie napisu "is typing", gdy ktoś coś pisze.
 
 
-W pliku html utworzyłam element ul o klasie pages i w nim mam dwa elementy li, jeden to strona logowania, drugi to strona z czatem. W zależności o sytuacji jedna strona jest ukrywana, a druga pokazywana.
+W pliku html utworzyłam element ul o klasie pages i w nim mam dwa elementy li, jeden to strona logowania, drugi to strona z czatem. W zależności od sytuacji jedna strona jest ukrywana, a druga pokazywana.
 
 ![1](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium8/screenshots/1.png?raw=true)
 
@@ -75,7 +75,7 @@ Poniżej zdefiniowałam kilka metod:
 ![15](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium8/screenshots/15.png?raw=true)
 
 Na dole obsługiwane są różne zdarzenia:
-- keydown - gdy wciśnięty zostaje enter pobierana jest wiadomość, jeśli ustnieje już username lub username, jeśli jeszcze nie istnieje:
+- keydown - gdy wciśnięty zostaje enter pobierana jest wiadomość, jeśli istnieje już username lub username, jeśli jeszcze nie istnieje:
 
 ![16](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/blob/main/Laboratorium8/screenshots/16.png?raw=true)
 
