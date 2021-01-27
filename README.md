@@ -22,7 +22,7 @@ Web Scraping z wykorzystaniem Beautiful Soup, XPath i lxml [Laboratorium5](https
 Aplikacja z wykorzystaniem Django + Celery + Redis [Laboratorium7](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium7)
 
 ### Laboratorium 8
-WKRÓTCE
+Chat z użyciem socket.io i wykorzystanie Web Workers [Laboratorium8](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium8)
 
 ### Laboratorium 9
 Django + React (aplikacja CRUD) [Laboratorium9](https://github.com/kamilanagorska/aplikacje-internetowe-nagorska-185ic/tree/main/Laboratorium9)

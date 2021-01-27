@@ -16,7 +16,7 @@
     <button onclick="startFirstWorker()">Oblicz</button> 
     <p>Wyrazy ciągu (od F0 do Fn): <output id="result"></output></p>
     <br><br><br>
-    <p style="font-size: 20px">1. NWD - Algorytm Euklidesa:</p>
+    <p style="font-size: 20px">2. NWD - Algorytm Euklidesa:</p>
     <form>
         <label>Wprowadź pierwszą liczbę:</label><br>
         <input type="number" id="a" required></input><br><br>
@@ -26,8 +26,6 @@
     <button onclick="startSecondWorker()">Oblicz</button> 
     <p>Największy wspólny dzielnik: <output id="result2"></output></p>
 
-
-    <script scr="/fibonacci.js"></script>
     <script>
         function startFirstWorker() {
             var w;
@@ -64,7 +62,7 @@
                     document.getElementById("result2").innerHTML = event.data;
                 }
             } else {
-                document.getElementById("result2").innerHTML = event.data;
+                document.getElementById("result2").innerHTML = "Przykro mi, ale Twoja przeglądarka nie wspiera Web Worker'ów...";
             }
         }
         

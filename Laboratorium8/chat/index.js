@@ -56,49 +56,76 @@ const express = require('express');
 const app = require('express')();
 const path = require('path');
 const http = require('http').Server(app);
+//inicjacja instancji socket.io przekazując http
 const io = require('socket.io')(http);
 
-//dodanie plików razem ze staticami
+//app.use() powiązuje oprogramowanie pośredniczące na poziomie aplikacji
+//app.use(express.static()) umożliwia wyświetlanie plików CSS i js 
+//__dirname,'/' jest "absolutną ścieżką" i jest bezpiecznym rozwiązaniem, gdy
+//ścieżka podana do funkcji express.static jest względna w stosunku do katalogu
+//z ktorego uruchamiamy proces node
 app.use(express.static(path.join(__dirname, '/')));
 
-
+//socket.on(<event name>, <listener>) służy do odebrania
+//zdarzenia poprzez zarejestrowanie nasłuchiwana (listener)
+//wszystko po { uruchamia się po udanym połączeniu
 io.on('connection', (socket) => {
+  //ustawiamy na false, bo na razie nie mamy zadnego uzytkownika
     let addedUser = false;
   
-    // Tworznie nowej wiadomości
+      //utworzenie użytkownika, po wejściu na strone
+      //wywoływane po wysłaniu zdarzenia add user
+      //czyli po tym jak zostanie wpisany username
+      //przez użytkownika i wciśnięte zostanie enter
+      socket.on('add user', (username) => {
+        //jeśli addedUser jest na true to return
+        if (addedUser) return;
+
+        //pod socket.username podstawiamy
+        //nazwę podaną przez użytkownika
+        socket.username = username;
+        //uzytkownik zostal dodany wiec true
+        addedUser = true;
+        //wysyłamy zdarzenie login
+        //zostaje ono obsluzone w scripts.js
+        socket.emit('login');
+      });
+
+    //tworzenie wiadomości
+    //po wysłaniu przez plik scripts.js zdarzenia 'chat message'
+    //wykonywane jest to:
     socket.on('chat message', (data) => {
+      //socket.broadcast.emit wysyła do wszystkich
       socket.broadcast.emit('chat message', {
+        //wysyłany jest username
         username: socket.username,
+        //i wiadomośc, ktora jest przechowywana w data
         message: data
       });
     });
   
-    // Tworznie nowego użytkownika
-    socket.on('add user', (username) => {
-      if (addedUser) return;
-  
-      // Przypisanie podanej nazwy do secket
-      socket.username = username;
-      addedUser = true;
-      socket.emit('login');
-    });
-  
-    // Wyświetlanie inforamicji o tym czy kotś pisze
+    //wyświetlanie napisu 'typing...' gdy ktos cos pisze
     socket.on('typing', () => {
+      //wyslanie zdarzenia typing
+      //do wszystkich, wszyscy będą widzieli napis 'typing'
+      //i odpowiednią nazwę uzytkownika
       socket.broadcast.emit('typing', {
         username: socket.username
       });
     });
   
-    // Zakonczenie wyświetlania
+    //zakonczenie wyświetlania napisu 'typing'
+    //wykonywane na wydarzenie 'stop typing'
     socket.on('stop typing', () => {
+      //wszyscy będą widzieli, że typing zniknęło
       socket.broadcast.emit('stop typing', {
         username: socket.username
       });
     });
   });
   
-
+//ustawienie, że nasz serwer będzie nasłuchiwał na localhost:3000
+//w konsoli wyświetlane jest listening on *:3000
 http.listen(3000, () => {
   console.log('listening on *:3000');
 });
